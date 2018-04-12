@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const fakeData = require('./dataFaking.js');
+const fakeData = require('./makeFakeData.js');
 
 mongoose.connect('mongodb://localhost/etsy');
 
