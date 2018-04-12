@@ -1,29 +1,7 @@
 const faker = require('faker');
+
 const fRan = faker.random;
-const mongoose = require('mongoose');
 
-const listingSchema = new mongoose.Schema({
-  title: String,
-  sellerName: String,
-  contactName: String,
-  variationTypes: Array,
-  variations: Array,
-  quantity: Number,
-  materials: Array,
-  isHandmade: Boolean,
-  isProduct: Boolean,
-  whenMade: String,
-  numReviews: Number,
-  numFavorites: Number,
-  acceptGiftCards: Boolean,
-  timeToShip: String,
-  shipOrigin: String,
-  acceptReturn: Boolean,
-  acceptExchange: Boolean,
-  acceptCancel: Boolean,
-});
-
-const Listing = mongoose.model('Listing', listingSchema);
 const varTypes = ['Color', 'Flavor', 'Size', 'Style', 'Material', 'Scent'];
 const whenMadeTypes = ['To order', 'Recently', '90s', '80s', '70s', '60s'];
 const timeToShipTypes = ['1-3 days', '3-5 days', '1-2 weeks', '2-3 weeks'];
@@ -46,9 +24,9 @@ const randWordArray = (len) => {
 const randInt = highest => 1 + Math.floor(Math.random() * highest);
 const randBool = () => !Math.round(Math.random());
 
-for (let i = 0; i < 3; i++) {
+const makeFake = () => {
   const numVariationTypes = randInt(3);
-  const fake = {
+  return {
     title: faker.commerce.productName(),
     sellerName: fRan.word(),
     contactName: faker.name.firstName(),
@@ -68,5 +46,7 @@ for (let i = 0; i < 3; i++) {
     acceptExchange: randBool(),
     acceptCancel: randBool(),
   };
-  console.log(fake);
-}
+};
+const fakes = Array(100).fill(null).map(() => makeFake());
+
+module.exports = fakes;

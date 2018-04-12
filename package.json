@@ -1,10 +1,13 @@
 {
   "name": "FEC-order-sidebar",
-  "version": "0.01",
+  "version": "0.10",
   "description": "UI mimic of Etsy order sidebar",
   "author": "Sam Liebow",
   "license": "USC",
-  "repository": { "type" : "git", "url" : "https://github.com/samliebow/FEC-order-sidebar"},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/samliebow/FEC-order-sidebar"
+  },
   "engines": {
     "node": ">=6.13.0"
   },
@@ -12,6 +15,7 @@
     "start": "node server/index.js"
   },
   "dependencies": {
+    "express": "^4.16.3",
     "mongoose": "^5.0.14",
     "react": "^16.3.1",
     "react-dom": "^16.3.1"
