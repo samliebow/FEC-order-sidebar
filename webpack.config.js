@@ -3,13 +3,16 @@ const webpack = require('webpack');
 
 module.exports = {
   entry: [
-    //'react-hot-loader/patch', // what is this doing exactly?
-    path.resolve('client', 'src', 'order-sidebar.jsx'),
+    'react-hot-loader/patch', // what is this doing exactly?
+    path.join(__dirname, 'client', 'src', 'order-sidebar.jsx'),
   ],
   output: {
-    path: path.resolve(__dirname, 'public'),
-    publicPath: '/public/',
+    path: path.join(__dirname, 'public'),
     filename: 'bundle.js',
+  },
+  devServer: {
+    contentBase: path.join(__dirname, 'public'),
+    hot: true,
   },
   watch: true,
   devtool: 'inline-source-map',
@@ -18,7 +21,7 @@ module.exports = {
     rules: [
       {
         test: /\.jsx?$/, // Check for this type of file
-        include: [path.resolve(__dirname, 'client', 'src')], // In this directory
+        include: [path.join(__dirname, 'client', 'src')], // In this directory
         loader: 'babel-loader', // Use this loader (npm package)
         options: {
           presets: [['react'], ['env', { displayErrorDetails: true }]],
@@ -26,5 +29,7 @@ module.exports = {
       },
     ],
   },
-  // plugins: [new webpack.HotModuleReplacementPlugin()],
+  plugins: [new webpack.HotModuleReplacementPlugin()],
 };
+
+console.log(path.join(__dirname, 'public'));

@@ -1,18 +1,15 @@
 const express = require('express');
 const webpack = require('webpack');
-const path = require('path');
 const config = require('../webpack.config.js');
-const middleware = require('webpack-dev-middleware');
+const WebpackDevServer = require('webpack-dev-server');
+const path = require('path');
 
-const app = express();
-const port = process.env.PORT || 541;
 const compiler = webpack(config);
+const port = process.env.PORT || 541;
 
-app.use(middleware(compiler, {
-  // hot: true,
-  publicPath: config.output.publicPath,
-}));
-
-// app.use(express.static(path.resolve(__dirname, '../public')));
+const app = new WebpackDevServer(compiler, {
+  publicPath: config.output.path,
+  hot: true,
+});
 
 app.listen(port, () => console.log(`Server running on ${port}...`));

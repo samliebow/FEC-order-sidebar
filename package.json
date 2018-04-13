@@ -12,8 +12,8 @@
     "node": ">=6.13.0"
   },
   "scripts": {
-    "start": "node server/index.js",
-    "build": "webpack --config ./webpack.config.js --display-error-details"
+    "start": "webpack-dev-server --client-log-level info --port 541",
+    "test": "webpack --config webpack.config.js"
   },
   "dependencies": {
     "express": "^4.16.3",
@@ -36,6 +36,6 @@
     "react-hot-loader": "^4.0.1",
     "webpack": "^4.5.0",
     "webpack-cli": "^2.0.14",
-    "webpack-dev-middleware": "^3.1.2"
+    "webpack-dev-server": "^3.1.3"
   }
 }
