@@ -6,6 +6,10 @@ class OrderSidebar extends React.Component {
     super(props);
     this.state = {};
   }
-};
 
-ReactDOM.render(<OrderSidebar />, 'order-sidebar');
+  render() {
+    return (<h1>Hello React</h1>);
+  }
+}
+
+ReactDOM.render(<OrderSidebar />, document.getElementById('order-sidebar'));
