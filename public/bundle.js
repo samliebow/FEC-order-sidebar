@@ -247,34 +247,28 @@ var OrderForm = function (_React$Component) {
         price: event.target.value
       });
     }
-  }, {
-    key: 'renderSpecialMessage',
-    value: function renderSpecialMessage() {
-      var specialMessage = 'others want'; // Hard-coding for now
-      if (specialMessage === 'others want') {
-        return _react2.default.createElement(
-          'div',
-          null,
-          _react2.default.createElement(
-            'span',
-            null,
-            '((Image will go here)) '
-          ),
-          _react2.default.createElement(
-            'span',
-            null,
-            _react2.default.createElement(
-              'b',
-              null,
-              'Other people want this. '
-            ),
-            this.props.data.numInCarts,
-            ' people have this in their carts right now.'
-          )
-        );
-      }
-      return null;
-    }
+
+    // Going to think about implementing this as a stretch goal
+
+    // renderSpecialMessage() {
+    //   const specialMessage = 'others want'; // Hard-coding for now
+    //   if (specialMessage === 'others want') {
+    //     return (
+    //       <div>
+    //         <span>((Image will go here)) </span>
+    //         { /* The real thing is vector graphics in a <g> tag,
+    //         will have to figure out how to replicate. */ }
+    //         <span>
+    //           <b>Other people want this. </b>
+    //           {this.props.data.numInCarts} people have this in their carts right now.
+    //         </span>
+    //       </div>
+    //     );
+    //   }
+    //   return null;
+    // }
+
+
   }, {
     key: 'render',
     value: function render() {
@@ -369,8 +363,7 @@ var OrderForm = function (_React$Component) {
             null,
             'Add to cart'
           )
-        ),
-        this.renderSpecialMessage()
+        )
       );
     }
   }]);
@@ -385,8 +378,8 @@ OrderForm.propTypes = {
     contactName: _propTypes2.default.string.isRequired,
     variationTypes: _propTypes2.default.arrayOf(_propTypes2.default.string),
     variations: _propTypes2.default.objectOf(_propTypes2.default.array),
-    quantity: _propTypes2.default.number,
-    numInCarts: _propTypes2.default.number
+    quantity: _propTypes2.default.number
+    // numInCarts: PropTypes.number,
   }).isRequired
 };
 
@@ -481,8 +474,8 @@ OrderSidebar.defaultProps = {
       variations: {
         Size: [['6x4 inches', 7.29], ['5x7 inches', 8.84], ['8x10 inches', 14.74]]
       },
-      quantity: 29,
-      numInCarts: 4
+      quantity: 29
+      // numInCarts: 4,
     },
     overview: {
       materials: ['Satin Photo Card', 'Photoshop'],
@@ -511,8 +504,8 @@ OrderSidebar.propTypes = {
       contactName: _propTypes2.default.string.isRequired,
       variationTypes: _propTypes2.default.arrayOf(_propTypes2.default.string),
       variations: _propTypes2.default.objectOf(_propTypes2.default.array),
-      quantity: _propTypes2.default.number,
-      numInCarts: _propTypes2.default.number
+      quantity: _propTypes2.default.number
+      // numInCarts: PropTypes.number,
     }).isRequired,
     overview: _propTypes2.default.shape({
       materials: _propTypes2.default.arrayOf(_propTypes2.default.string),

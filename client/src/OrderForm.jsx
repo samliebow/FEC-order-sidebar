@@ -27,23 +27,25 @@ class OrderForm extends React.Component {
     });
   }
 
-  renderSpecialMessage() {
-    const specialMessage = 'others want'; // Hard-coding for now
-    if (specialMessage === 'others want') {
-      return (
-        <div>
-          <span>((Image will go here)) </span>
-          {/* The real thing is vector graphics in a <g> tag,
-          will have to figure out how to replicate. */}
-          <span>
-            <b>Other people want this. </b>
-            {this.props.data.numInCarts} people have this in their carts right now.
-          </span>
-        </div>
-      );
-    }
-    return null;
-  }
+  // Going to think about implementing this as a stretch goal
+
+  // renderSpecialMessage() {
+  //   const specialMessage = 'others want'; // Hard-coding for now
+  //   if (specialMessage === 'others want') {
+  //     return (
+  //       <div>
+  //         <span>((Image will go here)) </span>
+  //         { /* The real thing is vector graphics in a <g> tag,
+  //         will have to figure out how to replicate. */ }
+  //         <span>
+  //           <b>Other people want this. </b>
+  //           {this.props.data.numInCarts} people have this in their carts right now.
+  //         </span>
+  //       </div>
+  //     );
+  //   }
+  //   return null;
+  // }
 
 
   render() {
@@ -97,7 +99,7 @@ class OrderForm extends React.Component {
           </button>
         </div>
 
-        {this.renderSpecialMessage()}
+        {/* this.renderSpecialMessage() */}
 
       </div>
     );
@@ -112,7 +114,7 @@ OrderForm.propTypes = {
     variationTypes: PropTypes.arrayOf(PropTypes.string),
     variations: PropTypes.objectOf(PropTypes.array),
     quantity: PropTypes.number,
-    numInCarts: PropTypes.number,
+    // numInCarts: PropTypes.number,
   }).isRequired,
 };
 

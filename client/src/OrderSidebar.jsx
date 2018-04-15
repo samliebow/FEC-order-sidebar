@@ -35,7 +35,7 @@ OrderSidebar.defaultProps = {
         Size: [['6x4 inches', 7.29], ['5x7 inches', 8.84], ['8x10 inches', 14.74]],
       },
       quantity: 29,
-      numInCarts: 4,
+      // numInCarts: 4,
     },
     overview: {
       materials: ['Satin Photo Card', 'Photoshop'],
@@ -65,7 +65,7 @@ OrderSidebar.propTypes = {
       variationTypes: PropTypes.arrayOf(PropTypes.string),
       variations: PropTypes.objectOf(PropTypes.array),
       quantity: PropTypes.number,
-      numInCarts: PropTypes.number,
+      // numInCarts: PropTypes.number,
     }).isRequired,
     overview: PropTypes.shape({
       materials: PropTypes.arrayOf(PropTypes.string),
