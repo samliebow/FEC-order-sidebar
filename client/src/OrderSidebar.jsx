@@ -11,8 +11,10 @@ const exampleData = {
     title: 'Star Trek - Captains Oath - Mission Oath - Quote Typography Art Poster Print - (Available in Many Sizes)',
     sellerName: 'HarknettPrints',
     contactName: 'Jamie [Harknett]',
-    variationTypes: 'Size',
-    variations: [['6x4 inches', 7.29], ['5x7 inches', 8.84], ['8x10 inches', 14.74]],
+    variationTypes: ['Size'],
+    variations: {
+      Size: [['6x4 inches', 7.29], ['5x7 inches', 8.84], ['8x10 inches', 14.74]],
+    },
     quantity: 29,
     numInCarts: 4,
   },
