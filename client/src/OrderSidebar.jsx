@@ -22,7 +22,7 @@ const exampleData = {
     materials: ['Satin Photo Card', 'Photoshop'],
     isHandmade: true,
     isProduct: true,
-    whenMade: 'Recently',
+    whenMade: 'To order',
     numReviews: 1995,
     numFavorites: 2573,
     acceptGiftCards: true,

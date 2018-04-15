@@ -11,7 +11,7 @@ class OrderForm extends React.Component {
     };
     const makeQuantityOptions = quantity =>
       Array(quantity).fill(null) // Array of nulls of length quantity
-        .map((nada, index) => <option value={index}>{index}</option>);
+        .map((nada, index) => <option key={index} value={index}>{index}</option>);
     this.quantityOptions = makeQuantityOptions(this.props.data.quantity);
   }
 
@@ -23,7 +23,10 @@ class OrderForm extends React.Component {
           <span>((Image will go here)) </span>
           {/* The real thing is vector graphics in a <g> tag,
           will have to figure out how to replicate. */}
-          <span><b>Other people want this.</b> 4 people have this in their carts right now.</span>
+          <span>
+            <b>Other people want this. </b>
+            {this.props.data.numInCarts} people have this in their carts right now.
+          </span>
         </div>
       );
     } else {
@@ -43,7 +46,7 @@ class OrderForm extends React.Component {
 
         <div id="variations">
           {this.props.data.variationTypes.map(type => (
-            <div className="variation">
+            <div key={type} className="variation">
               <div>{type}</div>
 
               <select>
@@ -51,7 +54,7 @@ class OrderForm extends React.Component {
                   .map((variation) => {
                     const [description, price] = variation;
                     return (
-                      <option value={`${variation}`}>
+                      <option key={description} value={variation}>
                         {`${description} ($${price})`}
                       </option>
                     );

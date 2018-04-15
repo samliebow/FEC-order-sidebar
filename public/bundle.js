@@ -117,6 +117,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
@@ -137,16 +139,152 @@ var OrderForm = function (_React$Component) {
   function OrderForm(props) {
     _classCallCheck(this, OrderForm);
 
-    return _possibleConstructorReturn(this, (OrderForm.__proto__ || Object.getPrototypeOf(OrderForm)).call(this, props));
+    // const getLowestPrice = (variationType) => {
+    //    **work on figuring out the default price shown later**
+    // }
+    var _this = _possibleConstructorReturn(this, (OrderForm.__proto__ || Object.getPrototypeOf(OrderForm)).call(this, props));
+
+    _this.state = {
+      // price
+    };
+    var makeQuantityOptions = function makeQuantityOptions(quantity) {
+      return Array(quantity).fill(null) // Array of nulls of length quantity
+      .map(function (nada, index) {
+        return _react2.default.createElement(
+          'option',
+          { key: index, value: index },
+          index
+        );
+      });
+    };
+    _this.quantityOptions = makeQuantityOptions(_this.props.data.quantity);
+    return _this;
   }
 
   _createClass(OrderForm, [{
-    key: "render",
+    key: 'renderSpecialMessage',
+    value: function renderSpecialMessage() {
+      var specialMessage = 'others want'; // Hard-coding for now
+      if (specialMessage === 'others want') {
+        return _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'span',
+            null,
+            '((Image will go here)) '
+          ),
+          _react2.default.createElement(
+            'span',
+            null,
+            _react2.default.createElement(
+              'b',
+              null,
+              'Other people want this. '
+            ),
+            this.props.data.numInCarts,
+            ' people have this in their carts right now.'
+          )
+        );
+      } else {
+        return _react2.default.createElement('br', null);
+      }
+    }
+  }, {
+    key: 'render',
     value: function render() {
+      var _this2 = this;
+
       return _react2.default.createElement(
-        "div",
-        { className: "mainItem", id: "order-form" },
-        "Add to cart"
+        'div',
+        { className: 'mainItem', id: 'order-form' },
+        _react2.default.createElement(
+          'h4',
+          null,
+          this.props.data.title
+        ),
+        _react2.default.createElement(
+          'div',
+          { id: 'price-and-question' },
+          _react2.default.createElement(
+            'span',
+            { id: 'price' },
+            '$7.29+ [HC]'
+          ),
+          _react2.default.createElement(
+            'span',
+            null,
+            _react2.default.createElement(
+              'button',
+              null,
+              'Ask a question'
+            )
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { id: 'variations' },
+          this.props.data.variationTypes.map(function (type) {
+            return _react2.default.createElement(
+              'div',
+              { key: type, className: 'variation' },
+              _react2.default.createElement(
+                'div',
+                null,
+                type
+              ),
+              _react2.default.createElement(
+                'select',
+                null,
+                _this2.props.data.variations[type].map(function (variation) {
+                  var _variation = _slicedToArray(variation, 2),
+                      description = _variation[0],
+                      price = _variation[1];
+
+                  return _react2.default.createElement(
+                    'option',
+                    { key: description, value: variation },
+                    description + ' ($' + price + ')'
+                  );
+                })
+              )
+            );
+          })
+        ),
+        _react2.default.createElement(
+          'div',
+          { id: 'quantity' },
+          _react2.default.createElement(
+            'div',
+            null,
+            'Quantity'
+          ),
+          _react2.default.createElement(
+            'select',
+            null,
+            this.quantityOptions
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { id: 'buy-now' },
+          _react2.default.createElement(
+            'button',
+            null,
+            'Buy it now ',
+            '>'
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { id: 'add-cart' },
+          _react2.default.createElement(
+            'button',
+            null,
+            'Add to cart'
+          )
+        ),
+        this.renderSpecialMessage()
       );
     }
   }]);
@@ -211,8 +349,10 @@ var exampleData = {
     title: 'Star Trek - Captains Oath - Mission Oath - Quote Typography Art Poster Print - (Available in Many Sizes)',
     sellerName: 'HarknettPrints',
     contactName: 'Jamie [Harknett]',
-    variationTypes: 'Size',
-    variations: [['6x4 inches', 7.29], ['5x7 inches', 8.84], ['8x10 inches', 14.74]],
+    variationTypes: ['Size'],
+    variations: {
+      Size: [['6x4 inches', 7.29], ['5x7 inches', 8.84], ['8x10 inches', 14.74]]
+    },
     quantity: 29,
     numInCarts: 4
   },
@@ -220,7 +360,7 @@ var exampleData = {
     materials: ['Satin Photo Card', 'Photoshop'],
     isHandmade: true,
     isProduct: true,
-    whenMade: 'Recently',
+    whenMade: 'To order',
     numReviews: 1995,
     numFavorites: 2573,
     acceptGiftCards: true
@@ -289,10 +429,97 @@ var _react2 = _interopRequireDefault(_react);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Overview = function Overview(props) {
+  var renderItemType = function renderItemType() {
+    if (props.data.isHandmade) {
+      var text = props.data.isProduct ? 'Handmade item' : 'Handmade supply';
+      return _react2.default.createElement(
+        'li',
+        null,
+        text
+      );
+    }
+    // Some more logic here for other item types?
+    return null;
+  };
+
+  var renderVintage = function renderVintage() {
+    if (props.data.whenMade === 'To order') {
+      return _react2.default.createElement(
+        'li',
+        null,
+        'Made to order'
+      );
+    }
+    if (props.data.whenMade !== 'Recently') {
+      return _react2.default.createElement(
+        'li',
+        null,
+        'Vintage item from the $',
+        props.data.whenMade
+      );
+    }
+  };
+
+  var renderGiftCardOption = function renderGiftCardOption() {
+    return props.data.acceptGiftCards ? _react2.default.createElement(
+      'div',
+      null,
+      _react2.default.createElement(
+        'span',
+        null,
+        'Img'
+      ),
+      _react2.default.createElement(
+        'span',
+        null,
+        'This shop accepts Etsy gift cards'
+      )
+    ) : undefined;
+  };
+
   return _react2.default.createElement(
-    "div",
-    { className: "mainItem", id: "overview" },
-    "It's made of materials"
+    'div',
+    { className: 'mainItem', id: 'overview' },
+    _react2.default.createElement(
+      'h5',
+      null,
+      'Overview'
+    ),
+    _react2.default.createElement(
+      'ul',
+      null,
+      renderItemType(),
+      _react2.default.createElement(
+        'li',
+        null,
+        'Materials: ',
+        props.data.materials.join(', ')
+      ),
+      renderVintage(),
+      _react2.default.createElement(
+        'li',
+        null,
+        'Feedback: ',
+        _react2.default.createElement(
+          'a',
+          { href: '#' },
+          props.data.numReviews,
+          ' reviews'
+        )
+      ),
+      _react2.default.createElement(
+        'li',
+        null,
+        'Favorited by: ',
+        _react2.default.createElement(
+          'a',
+          { href: '#' },
+          props.data.numFavorites,
+          ' people'
+        )
+      )
+    ),
+    renderGiftCardOption()
   );
 };
 
