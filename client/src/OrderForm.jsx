@@ -9,6 +9,10 @@ class OrderForm extends React.Component {
     this.state = {
       // price
     };
+    const makeQuantityOptions = quantity =>
+      Array(quantity).fill(null) // Array of nulls of length quantity
+        .map((nada, index) => <option value={index}>{index}</option>);
+    this.quantityOptions = makeQuantityOptions(this.props.data.quantity);
   }
 
   render() {
@@ -24,12 +28,25 @@ class OrderForm extends React.Component {
             <div className="variation">
               <div>{type}</div>
               <select>
-                {this.props.data.variations[type].map(variation => (
-                  <option value={`${variation}`}>{`${variation[0]} ($${variation[1]})`}</option>
-                ))}
+                {this.props.data.variations[type]
+                  .map((variation) => {
+                    const [description, price] = variation;
+                    return (
+                      <option value={`${variation}`}>
+                        {`${description} ($${price})`}
+                      </option>
+                    );
+                  })
+                }
               </select>
             </div>
           ))}
+        </div>
+        <div id="quantity">
+          <div>Quantity</div>
+          <select>
+            {this.quantityOptions}
+          </select>
         </div>
       </div>);
   }
