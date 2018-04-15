@@ -3,16 +3,27 @@ import React from 'react';
 class OrderForm extends React.Component {
   constructor(props) {
     super(props);
-    // const getLowestPrice = (variationType) => {
-    //    **work on figuring out the default price shown later**
-    // }
+    // This currently only handles one price-determining variation
+    // To do: see later if/how Etsy allows multiple of those
+    const getLowestPrice = (variationType) => {
+      const prices = this.props.data.variations[variationType]
+        .map(tuple => tuple[1]);
+      return Math.min(...prices);
+    };
     this.state = {
-      // price
+      price: getLowestPrice(this.props.data.variationTypes[0]),
     };
     const makeQuantityOptions = quantity =>
       Array(quantity).fill(null) // Array of nulls of length quantity
         .map((nada, index) => <option key={index} value={index}>{index}</option>);
     this.quantityOptions = makeQuantityOptions(this.props.data.quantity);
+    this.handleVariationSelect = this.handleVariationSelect.bind(this);
+  }
+
+  handleVariationSelect(event) {
+    this.setState({
+      price: event.target.value,
+    });
   }
 
   renderSpecialMessage() {
@@ -29,10 +40,10 @@ class OrderForm extends React.Component {
           </span>
         </div>
       );
-    } else {
-      return <br />;
     }
+    return null;
   }
+
 
   render() {
     return (
@@ -40,7 +51,7 @@ class OrderForm extends React.Component {
         <h4>{this.props.data.title}</h4>
 
         <div id="price-and-question">
-          <span id="price">$7.29+ [HC]</span>
+          <span id="price">${this.state.price}</span>
           <span><button>Ask a question</button></span>
         </div>
 
@@ -49,12 +60,12 @@ class OrderForm extends React.Component {
             <div key={type} className="variation">
               <div>{type}</div>
 
-              <select>
+              <select onChange={this.handleVariationSelect}>
                 {this.props.data.variations[type]
                   .map((variation) => {
                     const [description, price] = variation;
                     return (
-                      <option key={description} value={variation}>
+                      <option key={description} value={variation[1]}>
                         {`${description} ($${price})`}
                       </option>
                     );
