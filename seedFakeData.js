@@ -4,24 +4,32 @@ const fakeData = require('./makeFakeData.js');
 mongoose.connect('mongodb://localhost/etsy');
 
 const listingSchema = new mongoose.Schema({
-  title: String,
-  sellerName: String,
-  contactName: String,
-  variationTypes: Array,
-  variations: Array,
-  quantity: Number,
-  materials: Array,
-  isHandmade: Boolean,
-  isProduct: Boolean,
-  whenMade: String,
-  numReviews: Number,
-  numFavorites: Number,
-  acceptGiftCards: Boolean,
-  timeToShip: String,
-  shipOrigin: String,
-  acceptReturn: Boolean,
-  acceptExchange: Boolean,
-  acceptCancel: Boolean,
+  listingNum: String, // It has leading 0s
+  listingName: String,
+  orderForm: {
+    title: String,
+    sellerName: String,
+    contactName: String,
+    variationTypes: Array,
+    variations: Object,
+    quantity: Number,
+  },
+  overview: {
+    materials: Array,
+    isHandmade: Boolean,
+    isProduct: Boolean,
+    whenMade: String,
+    numReviews: Number,
+    numFavorites: Number,
+    acceptGiftCards: Boolean,
+  },
+  shipping: {
+    timeToShip: String,
+    shipOrigin: String,
+    acceptReturn: Boolean,
+    acceptExchange: Boolean,
+    acceptCancel: Boolean,
+  },
 });
 
 const Listing = mongoose.model('Listing', listingSchema);
