@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class OrderForm extends React.Component {
   constructor(props) {
@@ -102,5 +103,17 @@ class OrderForm extends React.Component {
     );
   }
 }
+
+OrderForm.propTypes = {
+  data: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    sellerName: PropTypes.string.isRequired,
+    contactName: PropTypes.string.isRequired,
+    variationTypes: PropTypes.arrayOf(PropTypes.string),
+    variations: PropTypes.objectOf(PropTypes.array),
+    quantity: PropTypes.number,
+    numInCarts: PropTypes.number,
+  }).isRequired,
+};
 
 export default OrderForm;

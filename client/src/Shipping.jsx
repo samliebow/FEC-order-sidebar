@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class Shipping extends React.Component {
   constructor(props) {
@@ -75,7 +76,7 @@ class Shipping extends React.Component {
       <div className="mainItem" id="shipping">
         <h4>Shipping & returns</h4>
         <b>Ready to ship in {this.props.data.timeToShip}</b> <br />
-        From {this.props.shipOrigin} <br />
+        From {this.props.data.shipOrigin} <br />
         <span>$7.35 shipping to </span>
         <span id="destination" onClick={this.toggleDestSelect}>
           {this.state.destCountry}, {this.state.destZip}
@@ -90,5 +91,15 @@ class Shipping extends React.Component {
     );
   }
 }
+
+Shipping.propTypes = {
+  data: PropTypes.shape({
+    timeToShip: PropTypes.string.isRequired,
+    shipOrigin: PropTypes.string.isRequired,
+    acceptReturn: PropTypes.bool.isRequired,
+    acceptExchange: PropTypes.bool.isRequired,
+    acceptCancel: PropTypes.bool.isRequired,
+  }).isRequired,
+};
 
 export default Shipping;

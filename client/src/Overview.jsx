@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const Overview = (props) => {
   const renderItemType = () => {
@@ -10,16 +11,17 @@ const Overview = (props) => {
     return null;
   };
 
-  const renderVintage = function () {
+  const renderVintage = function renderVintage() {
     if (props.data.whenMade === 'To order') {
       return <li>Made to order</li>;
     }
     if (props.data.whenMade !== 'Recently') {
       return <li>Vintage item from the ${props.data.whenMade}</li>;
     }
-  }
+    return null;
+  };
 
-  const renderGiftCardOption = function () {
+  const renderGiftCardOption = function renderGiftCardOption() {
     return props.data.acceptGiftCards ?
       <div><span>Img</span><span>This shop accepts Etsy gift cards</span></div> :
       undefined;
@@ -27,7 +29,7 @@ const Overview = (props) => {
 
   return (
     <div className="mainItem" id="overview">
-      <h5>Overview</h5>
+      <h4>Overview</h4>
       <ul>
         {renderItemType()}
         <li>Materials: {props.data.materials.join(', ')}</li>
@@ -39,6 +41,18 @@ const Overview = (props) => {
       {renderGiftCardOption()}
     </div>
   );
+};
+
+Overview.propTypes = {
+  data: PropTypes.shape({
+    materials: PropTypes.arrayOf(PropTypes.string),
+    isHandmade: PropTypes.bool.isRequired,
+    isProduct: PropTypes.bool.isRequired,
+    whenMade: PropTypes.string.isRequired,
+    numReviews: PropTypes.number.isRequired,
+    numFavorites: PropTypes.number.isRequired,
+    acceptGiftCards: PropTypes.bool.isRequired,
+  }).isRequired,
 };
 
 export default Overview;
