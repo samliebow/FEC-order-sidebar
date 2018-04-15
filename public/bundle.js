@@ -66,15 +66,102 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./client/src/order-sidebar.jsx");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./client/src/OrderSidebar.jsx");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./client/src/order-sidebar.jsx":
-/*!**************************************!*\
-  !*** ./client/src/order-sidebar.jsx ***!
-  \**************************************/
+/***/ "./client/src/Favorite.jsx":
+/*!*********************************!*\
+  !*** ./client/src/Favorite.jsx ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Favorite = function Favorite(props) {
+  return _react2.default.createElement(
+    "div",
+    { className: "mainItem", id: "favorite" },
+    "You like it"
+  );
+};
+
+exports.default = Favorite;
+
+/***/ }),
+
+/***/ "./client/src/OrderForm.jsx":
+/*!**********************************!*\
+  !*** ./client/src/OrderForm.jsx ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var OrderForm = function (_React$Component) {
+  _inherits(OrderForm, _React$Component);
+
+  function OrderForm(props) {
+    _classCallCheck(this, OrderForm);
+
+    return _possibleConstructorReturn(this, (OrderForm.__proto__ || Object.getPrototypeOf(OrderForm)).call(this, props));
+  }
+
+  _createClass(OrderForm, [{
+    key: "render",
+    value: function render() {
+      return _react2.default.createElement(
+        "div",
+        { className: "mainItem", id: "order-form" },
+        "Add to cart"
+      );
+    }
+  }]);
+
+  return OrderForm;
+}(_react2.default.Component);
+
+exports.default = OrderForm;
+
+/***/ }),
+
+/***/ "./client/src/OrderSidebar.jsx":
+/*!*************************************!*\
+  !*** ./client/src/OrderSidebar.jsx ***!
+  \*************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -91,6 +178,26 @@ var _reactDom = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/i
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
+var _OrderForm = __webpack_require__(/*! ./OrderForm.jsx */ "./client/src/OrderForm.jsx");
+
+var _OrderForm2 = _interopRequireDefault(_OrderForm);
+
+var _Overview = __webpack_require__(/*! ./Overview.jsx */ "./client/src/Overview.jsx");
+
+var _Overview2 = _interopRequireDefault(_Overview);
+
+var _Shipping = __webpack_require__(/*! ./Shipping.jsx */ "./client/src/Shipping.jsx");
+
+var _Shipping2 = _interopRequireDefault(_Shipping);
+
+var _Favorite = __webpack_require__(/*! ./Favorite.jsx */ "./client/src/Favorite.jsx");
+
+var _Favorite2 = _interopRequireDefault(_Favorite);
+
+var _Sharing = __webpack_require__(/*! ./Sharing.jsx */ "./client/src/Sharing.jsx");
+
+var _Sharing2 = _interopRequireDefault(_Sharing);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -98,6 +205,34 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var exampleData = {
+  orderForm: {
+    title: 'Star Trek - Captains Oath - Mission Oath - Quote Typography Art Poster Print - (Available in Many Sizes)',
+    sellerName: 'HarknettPrints',
+    contactName: 'Jamie [Harknett]',
+    variationTypes: 'Size',
+    variations: [['6x4 inches', 7.29], ['5x7 inches', 8.84], ['8x10 inches', 14.74]],
+    quantity: 29,
+    numInCarts: 4
+  },
+  overview: {
+    materials: ['Satin Photo Card', 'Photoshop'],
+    isHandmade: true,
+    isProduct: true,
+    whenMade: 'Recently',
+    numReviews: 1995,
+    numFavorites: 2573,
+    acceptGiftCards: true
+  },
+  shipping: {
+    timeToShip: '1-2 days',
+    shipOrigin: 'United Kingdom',
+    acceptReturn: true,
+    acceptExchange: true,
+    acceptCancel: false
+  }
+};
 
 var OrderSidebar = function (_React$Component) {
   _inherits(OrderSidebar, _React$Component);
@@ -115,9 +250,13 @@ var OrderSidebar = function (_React$Component) {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
-        'h1',
-        null,
-        'Hello React'
+        'div',
+        { id: 'container' },
+        _react2.default.createElement(_OrderForm2.default, { data: this.props.data.orderForm }),
+        _react2.default.createElement(_Overview2.default, { data: this.props.data.overview }),
+        _react2.default.createElement(_Shipping2.default, { data: this.props.data.shipping }),
+        _react2.default.createElement(_Favorite2.default, null),
+        _react2.default.createElement(_Sharing2.default, null)
       );
     }
   }]);
@@ -125,7 +264,103 @@ var OrderSidebar = function (_React$Component) {
   return OrderSidebar;
 }(_react2.default.Component);
 
-_reactDom2.default.render(_react2.default.createElement(OrderSidebar, null), document.getElementById('order-sidebar'));
+_reactDom2.default.render(_react2.default.createElement(OrderSidebar, { data: exampleData }), document.getElementById('order-sidebar'));
+
+/***/ }),
+
+/***/ "./client/src/Overview.jsx":
+/*!*********************************!*\
+  !*** ./client/src/Overview.jsx ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Overview = function Overview(props) {
+  return _react2.default.createElement(
+    "div",
+    { className: "mainItem", id: "overview" },
+    "It's made of materials"
+  );
+};
+
+exports.default = Overview;
+
+/***/ }),
+
+/***/ "./client/src/Sharing.jsx":
+/*!********************************!*\
+  !*** ./client/src/Sharing.jsx ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Sharing = function Sharing(props) {
+  return _react2.default.createElement(
+    "div",
+    { className: "mainItem", id: "sharing" },
+    "You'll share it"
+  );
+};
+
+exports.default = Sharing;
+
+/***/ }),
+
+/***/ "./client/src/Shipping.jsx":
+/*!*********************************!*\
+  !*** ./client/src/Shipping.jsx ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Shipping = function Shipping(props) {
+  return _react2.default.createElement(
+    "div",
+    { className: "mainItem", id: "shipping" },
+    "It'll be shipped to you"
+  );
+};
+
+exports.default = Shipping;
 
 /***/ }),
 

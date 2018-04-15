@@ -1,0 +1,14 @@
+#container {
+  width: 250px;
+  height: 1500px;
+  border-style: dotted;
+  display: inline-flex;
+}
+
+.mainItem {
+  border-top-style: ridge;
+}
+
+#sharing {
+  border-bottom-style: ridge;
+}
