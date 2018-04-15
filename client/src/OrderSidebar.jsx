@@ -4,7 +4,6 @@ import OrderForm from './OrderForm.jsx';
 import Overview from './Overview.jsx';
 import Shipping from './Shipping.jsx';
 import Favorite from './Favorite.jsx';
-import Sharing from './Sharing.jsx';
 
 const exampleData = {
   orderForm: {
@@ -28,7 +27,7 @@ const exampleData = {
     acceptGiftCards: true,
   },
   shipping: {
-    timeToShip: '1-2 days',
+    timeToShip: '1-2 business days',
     shipOrigin: 'United Kingdom',
     acceptReturn: true,
     acceptExchange: true,
@@ -49,8 +48,8 @@ class OrderSidebar extends React.Component {
         <Overview data={this.props.data.overview} />
         <Shipping data={this.props.data.shipping} />
         <Favorite />
-        <Sharing />
-      </div>);
+      </div>
+    );
   }
 }
 
