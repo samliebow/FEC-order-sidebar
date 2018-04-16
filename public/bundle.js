@@ -110,7 +110,7 @@ var Favorite = function (_React$Component) {
     _this.state = {
       favorited: false,
       added: false,
-      userLists: []
+      userLists: [] // To be used later on
     };
     _this.toggleFavorite = _this.toggleFavorite.bind(_this);
     _this.addToList = _this.addToList.bind(_this);
@@ -118,14 +118,14 @@ var Favorite = function (_React$Component) {
   }
 
   _createClass(Favorite, [{
-    key: 'toggleFavorite',
+    key: "toggleFavorite",
     value: function toggleFavorite() {
       this.setState({
         favorited: !this.state.favorited
       });
     }
   }, {
-    key: 'addToList',
+    key: "addToList",
     value: function addToList() {
       // Will add actual functionality beyond toggling later
       this.setState({
@@ -133,31 +133,57 @@ var Favorite = function (_React$Component) {
       });
     }
   }, {
-    key: 'renderFavorite',
+    key: "renderFavorite",
     value: function renderFavorite() {
+      var _this2 = this;
+
       return _react2.default.createElement(
-        'span',
-        { id: 'favorite-button', onClick: this.toggleFavorite },
-        this.state.favorited ? '[rHrt] Favorited' : '[gHrt] Favorite'
+        "span",
+        {
+          id: "favorite-button",
+          onClick: this.toggleFavorite,
+          role: "button",
+          tabIndex: 0,
+          onKeyPress: function onKeyPress(event) {
+            if (event.key === 'Enter') {
+              _this2.toggleFavorite();
+            }
+          }
+        },
+        this.state.favorited ? '[rHrt] Favorited' : // rHrt and gHrt are stand-ins for a red or grey heart icon
+        '[gHrt] Favorite'
       );
     }
   }, {
-    key: 'renderAdded',
+    key: "renderAdded",
     value: function renderAdded() {
+      var _this3 = this;
+
       return _react2.default.createElement(
-        'span',
-        { id: 'add-to-button', onClick: this.addToList },
-        this.state.added ? '[chk] Added' : '[noChk] Add to'
+        "span",
+        {
+          id: "add-to-button",
+          onClick: this.addToList,
+          role: "button",
+          tabIndex: 0,
+          onKeyPress: function onKeyPress(event) {
+            if (event.key === 'Enter') {
+              _this3.addToList();
+            }
+          }
+        },
+        this.state.added ? '[chk] Added' : // As above, stand-ins for icons
+        '[noChk] Add to'
       );
     }
   }, {
-    key: 'render',
+    key: "render",
     value: function render() {
       return _react2.default.createElement(
-        'div',
-        { className: 'mainItem', id: 'favorite-component' },
+        "div",
+        { className: "main-item", id: "favorite-component" },
         this.renderFavorite(),
-        '\xA0',
+        "\xA0",
         this.renderAdded()
       );
     }
@@ -212,24 +238,22 @@ var OrderForm = function (_React$Component) {
   function OrderForm(props) {
     _classCallCheck(this, OrderForm);
 
-    // This currently only handles one price-determining variation
-    // To do: see later if/how Etsy allows multiple of those
+    /*
+    A remaining issue here is handling multiple variation types.
+    Etsy allows two per item, and both can be determinative of price.
+    I'll need to refactor to allow for that: the code right now
+    handles only one variation properly.
+    */
     var _this = _possibleConstructorReturn(this, (OrderForm.__proto__ || Object.getPrototypeOf(OrderForm)).call(this, props));
 
     var getLowestPrice = function getLowestPrice(variationType) {
-      var prices = _this.props.data.variations[variationType].map(function (descPriceTuple) {
-        return descPriceTuple[1];
+      var prices = _this.props.data.variations[variationType].map(function (descriptionPriceTuple) {
+        return descriptionPriceTuple[1];
       });
       return Math.min.apply(Math, _toConsumableArray(prices));
     };
     var lowestPrice = getLowestPrice(_this.props.data.variationTypes[0]);
-    _this.state = {
-      singlePrice: lowestPrice,
-      totalPrice: lowestPrice,
-      quantity: 1,
-      variation: '',
-      pleaseSelectShown: false
-    };
+
     var makeQuantityOptions = function makeQuantityOptions(quantity) {
       return Array(quantity + 1).fill(null) // Array of nulls of length quantity + 1
       .map(function (nada, index) {
@@ -240,7 +264,17 @@ var OrderForm = function (_React$Component) {
         );
       });
     };
+    // quantity + 1 and .slice(1) to convert from 0-based to 1-based numbering
     _this.quantityOptions = makeQuantityOptions(_this.props.data.quantity).slice(1);
+
+    _this.state = {
+      singlePrice: lowestPrice,
+      totalPrice: lowestPrice,
+      quantity: 1,
+      variation: '',
+      pleaseSelectShown: false // e.g. "Please select a size"
+    };
+
     _this.handleVariationSelect = _this.handleVariationSelect.bind(_this);
     _this.handleQuantitySelect = _this.handleQuantitySelect.bind(_this);
     _this.handleBuyNowClick = _this.handleBuyNowClick.bind(_this);
@@ -250,6 +284,8 @@ var OrderForm = function (_React$Component) {
   _createClass(OrderForm, [{
     key: 'handleVariationSelect',
     value: function handleVariationSelect(event) {
+      // Passing a tuple in as a select option's value converts it to a string
+      // separated by commas. This would potentially create problems
       var _event$target$value$s = event.target.value.split(','),
           _event$target$value$s2 = _slicedToArray(_event$target$value$s, 2),
           description = _event$target$value$s2[0],
@@ -276,6 +312,7 @@ var OrderForm = function (_React$Component) {
       if (!this.state.variation) {
         this.setState({ pleaseSelectShown: true });
       }
+      // More stuff will go here when I add modals
     }
   }, {
     key: 'renderPleaseSelect',
@@ -287,28 +324,6 @@ var OrderForm = function (_React$Component) {
         variationType.toLowerCase()
       ) : null;
     }
-
-    // Going to think about implementing this as a stretch goal
-
-    // renderSpecialMessage() {
-    //   const specialMessage = 'others want'; // Hard-coding for now
-    //   if (specialMessage === 'others want') {
-    //     return (
-    //       <div>
-    //         <span>((Image will go here)) </span>
-    //         { /* The real thing is vector graphics in a <g> tag,
-    //         will have to figure out how to replicate. */ }
-    //         <span>
-    //           <b>Other people want this. </b>
-    //           {this.props.data.numInCarts} people have this in their carts right now.
-    //         </span>
-    //       </div>
-    //     );
-    //   }
-    //   return null;
-    // }
-
-
   }, {
     key: 'render',
     value: function render() {
@@ -316,10 +331,10 @@ var OrderForm = function (_React$Component) {
 
       return _react2.default.createElement(
         'div',
-        { className: 'mainItem', id: 'order-form' },
+        { className: 'main-item', id: 'order-form' },
         _react2.default.createElement(
           'h4',
-          null,
+          { id: 'title' },
           this.props.data.title
         ),
         _react2.default.createElement(
@@ -333,10 +348,10 @@ var OrderForm = function (_React$Component) {
           ),
           _react2.default.createElement(
             'span',
-            null,
+            { id: 'q-span' },
             _react2.default.createElement(
               'button',
-              null,
+              { id: 'q-button' },
               'Ask a question'
             )
           )
@@ -350,20 +365,20 @@ var OrderForm = function (_React$Component) {
               { key: type, className: 'variation' },
               _react2.default.createElement(
                 'div',
-                null,
+                { className: 'variation-name' },
                 type
               ),
               _react2.default.createElement(
                 'select',
                 { onChange: _this2.handleVariationSelect },
-                _this2.props.data.variations[type].map(function (variation) {
-                  var _variation = _slicedToArray(variation, 2),
-                      description = _variation[0],
-                      price = _variation[1];
+                _this2.props.data.variations[type].map(function (variationTuple) {
+                  var _variationTuple = _slicedToArray(variationTuple, 2),
+                      description = _variationTuple[0],
+                      price = _variationTuple[1];
 
                   return _react2.default.createElement(
                     'option',
-                    { key: description, value: variation },
+                    { key: description, value: variationTuple },
                     description + ' ($' + price + ')'
                   );
                 })
@@ -426,6 +441,26 @@ OrderForm.propTypes = {
 
 exports.default = OrderForm;
 
+/* Not implementing now, but leaving as notes for a stretch goal:
+
+renderSpecialMessage() {
+  const specialMessage = 'others want'; // Hard-coding for now
+  if (specialMessage === 'others want') {
+    return (
+      <div>
+        <span>((Image will go here, real thing is vector graphics in <g> tag)) </span>
+        <span>
+          <b>Other people want this. </b>
+          {this.props.data.numInCarts} people have this in their carts right now.
+        </span>
+      </div>
+    );
+  }
+  return null;
+}
+
+*/
+
 /***/ }),
 
 /***/ "./client/src/OrderSidebar.jsx":
@@ -484,7 +519,9 @@ var OrderSidebar = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (OrderSidebar.__proto__ || Object.getPrototypeOf(OrderSidebar)).call(this, props));
 
-    _this.state = {};
+    _this.state = {
+      data: _this.props.data
+    };
     return _this;
   }
 
@@ -494,9 +531,9 @@ var OrderSidebar = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         { id: 'container' },
-        _react2.default.createElement(_OrderForm2.default, { data: this.props.data.orderForm }),
-        _react2.default.createElement(_Overview2.default, { data: this.props.data.overview }),
-        _react2.default.createElement(_Shipping2.default, { data: this.props.data.shipping }),
+        _react2.default.createElement(_OrderForm2.default, { data: this.state.data.orderForm }),
+        _react2.default.createElement(_Overview2.default, { data: this.state.data.overview }),
+        _react2.default.createElement(_Shipping2.default, { data: this.state.data.shipping }),
         _react2.default.createElement(_Favorite2.default, null)
       );
     }
@@ -516,7 +553,6 @@ OrderSidebar.defaultProps = {
         Size: [['6x4 inches', 7.29], ['5x7 inches', 8.84], ['8x10 inches', 14.74]]
       },
       quantity: 29
-      // numInCarts: 4,
     },
     overview: {
       materials: ['Satin Photo Card', 'Photoshop'],
@@ -546,7 +582,7 @@ OrderSidebar.propTypes = {
       variationTypes: _propTypes2.default.arrayOf(_propTypes2.default.string),
       variations: _propTypes2.default.objectOf(_propTypes2.default.array),
       quantity: _propTypes2.default.number
-      // numInCarts: PropTypes.number,
+      // numInCarts: PropTypes.number, // For special message
     }).isRequired,
     overview: _propTypes2.default.shape({
       materials: _propTypes2.default.arrayOf(_propTypes2.default.string),
@@ -601,11 +637,11 @@ var Overview = function Overview(props) {
       var text = props.data.isProduct ? 'Handmade item' : 'Handmade supply';
       return _react2.default.createElement(
         'li',
-        null,
+        { className: 'overview-list' },
         text
       );
     }
-    // Some more logic here for other item types?
+    // Need to check later if there are other item types to render
     return null;
   };
 
@@ -613,14 +649,14 @@ var Overview = function Overview(props) {
     if (props.data.whenMade === 'To order') {
       return _react2.default.createElement(
         'li',
-        null,
+        { className: 'overview-list' },
         'Made to order'
       );
     }
     if (props.data.whenMade !== 'Recently') {
       return _react2.default.createElement(
         'li',
-        null,
+        { className: 'overview-list' },
         'Vintage item from the $',
         props.data.whenMade
       );
@@ -634,12 +670,12 @@ var Overview = function Overview(props) {
       null,
       _react2.default.createElement(
         'span',
-        null,
-        'Img'
+        { id: 'gift-card-icon' },
+        '((Img))'
       ),
       _react2.default.createElement(
         'span',
-        null,
+        { id: 'gift-cart-msg' },
         'This shop accepts Etsy gift cards'
       )
     ) : undefined;
@@ -647,7 +683,7 @@ var Overview = function Overview(props) {
 
   return _react2.default.createElement(
     'div',
-    { className: 'mainItem', id: 'overview' },
+    { className: 'main-item', id: 'overview' },
     _react2.default.createElement(
       'h4',
       null,
@@ -659,15 +695,15 @@ var Overview = function Overview(props) {
       renderItemType(),
       _react2.default.createElement(
         'li',
-        null,
+        { className: 'overview-list' },
         'Materials: ',
         props.data.materials.join(', ')
       ),
       renderVintage(),
       _react2.default.createElement(
         'li',
-        null,
-        'Feedback: ',
+        { className: 'overview-list' },
+        'Feedback:',
         _react2.default.createElement(
           'a',
           { href: '#' },
@@ -677,8 +713,8 @@ var Overview = function Overview(props) {
       ),
       _react2.default.createElement(
         'li',
-        null,
-        'Favorited by: ',
+        { className: 'overview-list' },
+        'Favorited by:',
         _react2.default.createElement(
           'a',
           { href: '#' },
@@ -842,9 +878,11 @@ var Shipping = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       return _react2.default.createElement(
         'div',
-        { className: 'mainItem', id: 'shipping' },
+        { className: 'main-item', id: 'shipping' },
         _react2.default.createElement(
           'h4',
           null,
@@ -869,16 +907,27 @@ var Shipping = function (_React$Component) {
         ),
         _react2.default.createElement(
           'span',
-          { id: 'destination', onClick: this.toggleDestSelect },
+          {
+            id: 'destination',
+            onClick: this.toggleDestSelect,
+            role: 'button',
+            tabIndex: 0,
+            onKeyPress: function onKeyPress(event) {
+              if (event.key === 'Enter') {
+                _this2.toggleDestSelect();
+              }
+            }
+          },
           this.state.destCountry,
           ', ',
           this.state.destZip
         ),
+        ' ',
         _react2.default.createElement('br', null),
         this.renderDestSelect(),
         _react2.default.createElement(
           'span',
-          { id: 'upgrades-avail' },
+          { id: 'upgrades-available' },
           'Shipping upgrades available in the cart'
         ),
         ' ',

@@ -73,18 +73,28 @@ class Shipping extends React.Component {
 
   render() {
     return (
-      <div className="mainItem" id="shipping">
+      <div className="main-item" id="shipping">
         <h4>Shipping & returns</h4>
+
         <b>Ready to ship in {this.props.data.timeToShip}</b> <br />
         From {this.props.data.shipOrigin} <br />
+        {/* Not sure if I should be using spans with <br>, divs, or something else */}
         <span>$7.35 shipping to </span>
-        <span id="destination" onClick={this.toggleDestSelect}>
+        <span
+          id="destination"
+          onClick={this.toggleDestSelect}
+          role="button"
+          tabIndex={0}
+          onKeyPress={(event) => { if (event.key === 'Enter') { this.toggleDestSelect(); } }}
+        >
           {this.state.destCountry}, {this.state.destZip}
-        </span>
-        <br />
+        </span> <br />
+
         {this.renderDestSelect()}
-        <span id="upgrades-avail">Shipping upgrades available in the cart</span> <br />
+
+        <span id="upgrades-available">Shipping upgrades available in the cart</span> <br />
         <br />
+
         <b>Returns and exchanges accepted</b> <br />
         Exceptions may apply. <a href="#">See return policy</a> <br />
       </div>

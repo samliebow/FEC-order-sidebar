@@ -6,10 +6,10 @@ class Favorite extends React.Component {
     this.state = {
       favorited: false,
       added: false,
-      userLists: [],
+      userLists: [], // To be used later on
     };
     this.toggleFavorite = this.toggleFavorite.bind(this);
-    this.addToList = this.addToList.bind(this);    
+    this.addToList = this.addToList.bind(this);
   }
 
   toggleFavorite() {
@@ -27,9 +27,15 @@ class Favorite extends React.Component {
 
   renderFavorite() {
     return (
-      <span id="favorite-button" onClick={this.toggleFavorite}>
+      <span
+        id="favorite-button"
+        onClick={this.toggleFavorite}
+        role="button"
+        tabIndex={0}
+        onKeyPress={(event) => { if (event.key === 'Enter') { this.toggleFavorite(); } }}
+      >
         {this.state.favorited ?
-          '[rHrt] Favorited' :
+          '[rHrt] Favorited' : // rHrt and gHrt are stand-ins for a red or grey heart icon
           '[gHrt] Favorite'
         }
       </span>
@@ -38,9 +44,15 @@ class Favorite extends React.Component {
 
   renderAdded() {
     return (
-      <span id="add-to-button" onClick={this.addToList}> 
+      <span
+        id="add-to-button"
+        onClick={this.addToList}
+        role="button"
+        tabIndex={0}
+        onKeyPress={(event) => { if (event.key === 'Enter') { this.addToList(); } }}
+      >
         {this.state.added ?
-          '[chk] Added' :
+          '[chk] Added' : // As above, stand-ins for icons
           '[noChk] Add to'
         }
       </span>
@@ -49,7 +61,7 @@ class Favorite extends React.Component {
 
   render() {
     return (
-      <div className="mainItem" id="favorite-component">
+      <div className="main-item" id="favorite-component">
         {this.renderFavorite()}
         &nbsp;
         {this.renderAdded()}

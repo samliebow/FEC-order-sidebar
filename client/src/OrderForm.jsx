@@ -4,31 +4,42 @@ import PropTypes from 'prop-types';
 class OrderForm extends React.Component {
   constructor(props) {
     super(props);
-    // This currently only handles one price-determining variation
-    // To do: see later if/how Etsy allows multiple of those
+    /*
+    A remaining issue here is handling multiple variation types.
+    Etsy allows two per item, and both can be determinative of price.
+    I'll need to refactor to allow for that: the code right now
+    handles only one variation properly.
+    */
     const getLowestPrice = (variationType) => {
       const prices = this.props.data.variations[variationType]
-        .map(tuple => tuple[1]);
+        .map(descriptionPriceTuple => descriptionPriceTuple[1]);
       return Math.min(...prices);
     };
     const lowestPrice = getLowestPrice(this.props.data.variationTypes[0]);
+
+    const makeQuantityOptions = quantity =>
+      Array(quantity + 1).fill(null) // Array of nulls of length quantity + 1
+        .map((nada, index) => <option key={index} value={index}>{index}</option>);
+    // quantity + 1 and .slice(1) to convert from 0-based to 1-based numbering
+    this.quantityOptions = makeQuantityOptions(this.props.data.quantity).slice(1);
+
     this.state = {
       singlePrice: lowestPrice,
       totalPrice: lowestPrice,
       quantity: 1,
       variation: '',
-      pleaseSelectShown: false,
+      pleaseSelectShown: false, // e.g. "Please select a size"
     };
-    const makeQuantityOptions = quantity =>
-      Array(quantity + 1).fill(null) // Array of nulls of length quantity
-        .map((nada, index) => <option key={index} value={index}>{index}</option>);
-    this.quantityOptions = makeQuantityOptions(this.props.data.quantity).slice(1);
+
     this.handleVariationSelect = this.handleVariationSelect.bind(this);
     this.handleQuantitySelect = this.handleQuantitySelect.bind(this);
     this.handleBuyNowClick = this.handleBuyNowClick.bind(this);
   }
 
   handleVariationSelect(event) {
+    // Passing a tuple in as a select option's value converts it to a string
+    // separated by commas. This would potentially create problems
+    // if the description had commas in it.
     const [description, price] = event.target.value.split(',');
     this.setState({
       singlePrice: price,
@@ -49,6 +60,7 @@ class OrderForm extends React.Component {
     if (!this.state.variation) {
       this.setState({ pleaseSelectShown: true });
     }
+    // More stuff will go here when I add modals
   }
 
   renderPleaseSelect(variationType) {
@@ -59,54 +71,37 @@ class OrderForm extends React.Component {
       null;
   }
 
-  // Going to think about implementing this as a stretch goal
-
-  // renderSpecialMessage() {
-  //   const specialMessage = 'others want'; // Hard-coding for now
-  //   if (specialMessage === 'others want') {
-  //     return (
-  //       <div>
-  //         <span>((Image will go here)) </span>
-  //         { /* The real thing is vector graphics in a <g> tag,
-  //         will have to figure out how to replicate. */ }
-  //         <span>
-  //           <b>Other people want this. </b>
-  //           {this.props.data.numInCarts} people have this in their carts right now.
-  //         </span>
-  //       </div>
-  //     );
-  //   }
-  //   return null;
-  // }
-
-
   render() {
     return (
-      <div className="mainItem" id="order-form">
-        <h4>{this.props.data.title}</h4>
+      <div className="main-item" id="order-form">
+        <h4 id="title">{this.props.data.title}</h4>
 
         <div id="price-and-question">
           <span id="price">${this.state.totalPrice}</span>
-          <span><button>Ask a question</button></span>
+          <span id="q-span"><button id="q-button">Ask a question</button></span>
         </div>
 
         <div id="variations">
           {this.props.data.variationTypes.map(type => (
             <div key={type} className="variation">
-              <div>{type}</div>
+              <div className="variation-name">{type}</div>
 
               <select onChange={this.handleVariationSelect}>
+
                 {this.props.data.variations[type]
-                  .map((variation) => {
-                    const [description, price] = variation;
+                  .map((variationTuple) => {
+                    const [description, price] = variationTuple;
+
                     return (
-                      <option key={description} value={variation}>
+                      <option key={description} value={variationTuple}>
                         {`${description} ($${price})`}
                       </option>
                     );
                   })
                 }
+
               </select>
+
               {this.renderPleaseSelect(type)}
             </div>
           ))}
@@ -131,8 +126,6 @@ class OrderForm extends React.Component {
           </button>
         </div>
 
-        {/* this.renderSpecialMessage() */}
-
       </div>
     );
   }
@@ -151,3 +144,24 @@ OrderForm.propTypes = {
 };
 
 export default OrderForm;
+
+
+/* Not implementing now, but leaving as notes for a stretch goal:
+
+renderSpecialMessage() {
+  const specialMessage = 'others want'; // Hard-coding for now
+  if (specialMessage === 'others want') {
+    return (
+      <div>
+        <span>((Image will go here, real thing is vector graphics in <g> tag)) </span>
+        <span>
+          <b>Other people want this. </b>
+          {this.props.data.numInCarts} people have this in their carts right now.
+        </span>
+      </div>
+    );
+  }
+  return null;
+}
+
+*/

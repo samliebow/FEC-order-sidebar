@@ -9,15 +9,17 @@ import Favorite from './Favorite';
 class OrderSidebar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      data: this.props.data,
+    };
   }
 
   render() {
     return (
       <div id="container">
-        <OrderForm data={this.props.data.orderForm} />
-        <Overview data={this.props.data.overview} />
-        <Shipping data={this.props.data.shipping} />
+        <OrderForm data={this.state.data.orderForm} />
+        <Overview data={this.state.data.overview} />
+        <Shipping data={this.state.data.shipping} />
         <Favorite />
       </div>
     );
@@ -35,7 +37,6 @@ OrderSidebar.defaultProps = {
         Size: [['6x4 inches', 7.29], ['5x7 inches', 8.84], ['8x10 inches', 14.74]],
       },
       quantity: 29,
-      // numInCarts: 4,
     },
     overview: {
       materials: ['Satin Photo Card', 'Photoshop'],
@@ -65,7 +66,7 @@ OrderSidebar.propTypes = {
       variationTypes: PropTypes.arrayOf(PropTypes.string),
       variations: PropTypes.objectOf(PropTypes.array),
       quantity: PropTypes.number,
-      // numInCarts: PropTypes.number,
+      // numInCarts: PropTypes.number, // For special message
     }).isRequired,
     overview: PropTypes.shape({
       materials: PropTypes.arrayOf(PropTypes.string),
@@ -87,4 +88,3 @@ OrderSidebar.propTypes = {
 };
 
 ReactDOM.render(<OrderSidebar />, document.getElementById('order-sidebar'));
-
