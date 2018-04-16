@@ -6,14 +6,16 @@ const Listing = require('../data/Listing.js');
 const app = express();
 
 // matches listings/<any nine digits>/<any-letter-and-dash-sequence>/<not ending with 'data'>
-app.use(/listings\/[0-9]{9}\/[A-z-]+\/(?!(data))/, express.static(path.join(__dirname, '../public')));
+// currently needs the / after listing-name, couldn't fix the regex to allow that
+app.use(/listings\/[0-9]{9}\/[A-z-]+\/(?!data)/, express.static(path.join(__dirname, '../public')));
 
 app.get(
-  'listings/:listingNum/:listingName/data',
+  '/listings/:listingNum/:listingName/data',
   (req, res) => {
     const { listingNum, listingName } = req.params;
     Listing.findOne({ listingNum, listingName })
-      .then(result => res.send(JSON.stringify(result)));
+      .then(result => res.send(JSON.stringify(result)))
+      .catch(error => console.error(error));
   },
 );
 
