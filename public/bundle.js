@@ -222,11 +222,15 @@ var OrderForm = function (_React$Component) {
       });
       return Math.min.apply(Math, _toConsumableArray(prices));
     };
+    var lowestPrice = getLowestPrice(_this.props.data.variationTypes[0]);
     _this.state = {
-      price: getLowestPrice(_this.props.data.variationTypes[0])
+      singlePrice: lowestPrice,
+      totalPrice: lowestPrice,
+      quantity: 1,
+      variation: ''
     };
     var makeQuantityOptions = function makeQuantityOptions(quantity) {
-      return Array(quantity).fill(null) // Array of nulls of length quantity
+      return Array(quantity + 1).fill(null) // Array of nulls of length quantity
       .map(function (nada, index) {
         return _react2.default.createElement(
           'option',
@@ -235,16 +239,32 @@ var OrderForm = function (_React$Component) {
         );
       });
     };
-    _this.quantityOptions = makeQuantityOptions(_this.props.data.quantity);
+    _this.quantityOptions = makeQuantityOptions(_this.props.data.quantity).slice(1);
     _this.handleVariationSelect = _this.handleVariationSelect.bind(_this);
+    _this.handleQuantitySelect = _this.handleQuantitySelect.bind(_this);
     return _this;
   }
 
   _createClass(OrderForm, [{
     key: 'handleVariationSelect',
     value: function handleVariationSelect(event) {
+      var _event$target$value$s = event.target.value.split(','),
+          _event$target$value$s2 = _slicedToArray(_event$target$value$s, 2),
+          description = _event$target$value$s2[0],
+          price = _event$target$value$s2[1];
+
       this.setState({
-        price: event.target.value
+        singlePrice: price,
+        variation: description
+      });
+    }
+  }, {
+    key: 'handleQuantitySelect',
+    value: function handleQuantitySelect(event) {
+      var quantity = +event.target.value;
+      this.setState({
+        quantity: quantity,
+        totalPrice: this.state.singlePrice * quantity
       });
     }
 
@@ -289,7 +309,7 @@ var OrderForm = function (_React$Component) {
             'span',
             { id: 'price' },
             '$',
-            this.state.price
+            this.state.totalPrice
           ),
           _react2.default.createElement(
             'span',
@@ -323,7 +343,7 @@ var OrderForm = function (_React$Component) {
 
                   return _react2.default.createElement(
                     'option',
-                    { key: description, value: variation[1] },
+                    { key: description, value: variation },
                     description + ' ($' + price + ')'
                   );
                 })
@@ -341,7 +361,7 @@ var OrderForm = function (_React$Component) {
           ),
           _react2.default.createElement(
             'select',
-            null,
+            { onChange: this.handleQuantitySelect },
             this.quantityOptions
           )
         ),

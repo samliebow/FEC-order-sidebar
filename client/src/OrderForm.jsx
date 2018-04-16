@@ -11,19 +11,34 @@ class OrderForm extends React.Component {
         .map(tuple => tuple[1]);
       return Math.min(...prices);
     };
+    const lowestPrice = getLowestPrice(this.props.data.variationTypes[0]);
     this.state = {
-      price: getLowestPrice(this.props.data.variationTypes[0]),
+      singlePrice: lowestPrice,
+      totalPrice: lowestPrice,
+      quantity: 1,
+      variation: '',
     };
     const makeQuantityOptions = quantity =>
-      Array(quantity).fill(null) // Array of nulls of length quantity
+      Array(quantity + 1).fill(null) // Array of nulls of length quantity
         .map((nada, index) => <option key={index} value={index}>{index}</option>);
-    this.quantityOptions = makeQuantityOptions(this.props.data.quantity);
+    this.quantityOptions = makeQuantityOptions(this.props.data.quantity).slice(1);
     this.handleVariationSelect = this.handleVariationSelect.bind(this);
+    this.handleQuantitySelect = this.handleQuantitySelect.bind(this);
   }
 
   handleVariationSelect(event) {
+    const [description, price] = event.target.value.split(',');
     this.setState({
-      price: event.target.value,
+      singlePrice: price,
+      variation: description,
+    });
+  }
+
+  handleQuantitySelect(event) {
+    const quantity = +event.target.value;
+    this.setState({
+      quantity,
+      totalPrice: this.state.singlePrice * quantity,
     });
   }
 
@@ -54,7 +69,7 @@ class OrderForm extends React.Component {
         <h4>{this.props.data.title}</h4>
 
         <div id="price-and-question">
-          <span id="price">${this.state.price}</span>
+          <span id="price">${this.state.totalPrice}</span>
           <span><button>Ask a question</button></span>
         </div>
 
@@ -68,7 +83,7 @@ class OrderForm extends React.Component {
                   .map((variation) => {
                     const [description, price] = variation;
                     return (
-                      <option key={description} value={variation[1]}>
+                      <option key={description} value={variation}>
                         {`${description} ($${price})`}
                       </option>
                     );
@@ -82,7 +97,7 @@ class OrderForm extends React.Component {
 
         <div id="quantity">
           <div>Quantity</div>
-          <select>
+          <select onChange={this.handleQuantitySelect}>
             {this.quantityOptions}
           </select>
         </div>
