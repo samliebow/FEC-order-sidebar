@@ -45,6 +45,7 @@ class OrderForm extends React.Component {
       singlePrice: price,
       variation: description,
       pleaseSelectShown: false,
+      totalPrice: price * this.state.quantity,
     });
   }
 

@@ -1,9 +1,11 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const path = require('path');
 const mongoose = require('mongoose');
 const Listing = require('../data/Listing.js');
 
 const app = express();
+app.use(bodyParser.json());
 
 // matches listings/<any nine digits>/<any-letter-and-dash-sequence>/<not ending with 'data'>
 // currently needs the / after listing-name, couldn't fix the regex to allow that
@@ -17,6 +19,16 @@ app.get(
       .then(result => res.send(JSON.stringify(result)))
       .catch(error => console.error(error));
   },
+);
+
+app.post(
+  '/listings',
+  (req, res) => Listing.create(req.body)
+    .then(() => res.send('Listing saved'))
+    .catch((error) => {
+      console.error(error);
+      res.status(500).send('Failed to save listing');
+    }),
 );
 
 mongoose.connect('mongodb://localhost/etsy');
