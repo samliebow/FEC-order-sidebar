@@ -431,19 +431,19 @@ var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-type
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _OrderForm = __webpack_require__(/*! ./OrderForm.jsx */ "./client/src/OrderForm.jsx");
+var _OrderForm = __webpack_require__(/*! ./OrderForm */ "./client/src/OrderForm.jsx");
 
 var _OrderForm2 = _interopRequireDefault(_OrderForm);
 
-var _Overview = __webpack_require__(/*! ./Overview.jsx */ "./client/src/Overview.jsx");
+var _Overview = __webpack_require__(/*! ./Overview */ "./client/src/Overview.jsx");
 
 var _Overview2 = _interopRequireDefault(_Overview);
 
-var _Shipping = __webpack_require__(/*! ./Shipping.jsx */ "./client/src/Shipping.jsx");
+var _Shipping = __webpack_require__(/*! ./Shipping */ "./client/src/Shipping.jsx");
 
 var _Shipping2 = _interopRequireDefault(_Shipping);
 
-var _Favorite = __webpack_require__(/*! ./Favorite.jsx */ "./client/src/Favorite.jsx");
+var _Favorite = __webpack_require__(/*! ./Favorite */ "./client/src/Favorite.jsx");
 
 var _Favorite2 = _interopRequireDefault(_Favorite);
 

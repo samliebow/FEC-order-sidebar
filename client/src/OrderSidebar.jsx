@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import OrderForm from './OrderForm.jsx';
-import Overview from './Overview.jsx';
-import Shipping from './Shipping.jsx';
-import Favorite from './Favorite.jsx';
+import OrderForm from './OrderForm';
+import Overview from './Overview';
+import Shipping from './Shipping';
+import Favorite from './Favorite';
 
 class OrderSidebar extends React.Component {
   constructor(props) {
