@@ -17,6 +17,7 @@ class OrderForm extends React.Component {
       totalPrice: lowestPrice,
       quantity: 1,
       variation: '',
+      pleaseSelectShown: false,
     };
     const makeQuantityOptions = quantity =>
       Array(quantity + 1).fill(null) // Array of nulls of length quantity
@@ -24,6 +25,7 @@ class OrderForm extends React.Component {
     this.quantityOptions = makeQuantityOptions(this.props.data.quantity).slice(1);
     this.handleVariationSelect = this.handleVariationSelect.bind(this);
     this.handleQuantitySelect = this.handleQuantitySelect.bind(this);
+    this.handleBuyNowClick = this.handleBuyNowClick.bind(this);
   }
 
   handleVariationSelect(event) {
@@ -31,6 +33,7 @@ class OrderForm extends React.Component {
     this.setState({
       singlePrice: price,
       variation: description,
+      pleaseSelectShown: false,
     });
   }
 
@@ -40,6 +43,20 @@ class OrderForm extends React.Component {
       quantity,
       totalPrice: this.state.singlePrice * quantity,
     });
+  }
+
+  handleBuyNowClick(event) {
+    if (!this.state.variation) {
+      this.setState({ pleaseSelectShown: true });
+    }
+  }
+
+  renderPleaseSelect(variationType) {
+    return this.state.pleaseSelectShown ?
+      <div className="please-select">
+        Please select a {variationType.toLowerCase()}
+      </div> :
+      null;
   }
 
   // Going to think about implementing this as a stretch goal
@@ -90,7 +107,7 @@ class OrderForm extends React.Component {
                   })
                 }
               </select>
-
+              {this.renderPleaseSelect(type)}
             </div>
           ))}
         </div>
@@ -103,7 +120,7 @@ class OrderForm extends React.Component {
         </div>
 
         <div id="buy-now">
-          <button>
+          <button onClick={this.handleBuyNowClick}>
           Buy it now {'>'}
           </button>
         </div>

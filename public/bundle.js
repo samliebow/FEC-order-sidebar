@@ -227,7 +227,8 @@ var OrderForm = function (_React$Component) {
       singlePrice: lowestPrice,
       totalPrice: lowestPrice,
       quantity: 1,
-      variation: ''
+      variation: '',
+      pleaseSelectShown: false
     };
     var makeQuantityOptions = function makeQuantityOptions(quantity) {
       return Array(quantity + 1).fill(null) // Array of nulls of length quantity
@@ -242,6 +243,7 @@ var OrderForm = function (_React$Component) {
     _this.quantityOptions = makeQuantityOptions(_this.props.data.quantity).slice(1);
     _this.handleVariationSelect = _this.handleVariationSelect.bind(_this);
     _this.handleQuantitySelect = _this.handleQuantitySelect.bind(_this);
+    _this.handleBuyNowClick = _this.handleBuyNowClick.bind(_this);
     return _this;
   }
 
@@ -255,7 +257,8 @@ var OrderForm = function (_React$Component) {
 
       this.setState({
         singlePrice: price,
-        variation: description
+        variation: description,
+        pleaseSelectShown: false
       });
     }
   }, {
@@ -266,6 +269,23 @@ var OrderForm = function (_React$Component) {
         quantity: quantity,
         totalPrice: this.state.singlePrice * quantity
       });
+    }
+  }, {
+    key: 'handleBuyNowClick',
+    value: function handleBuyNowClick(event) {
+      if (!this.state.variation) {
+        this.setState({ pleaseSelectShown: true });
+      }
+    }
+  }, {
+    key: 'renderPleaseSelect',
+    value: function renderPleaseSelect(variationType) {
+      return this.state.pleaseSelectShown ? _react2.default.createElement(
+        'div',
+        { className: 'please-select' },
+        'Please select a ',
+        variationType.toLowerCase()
+      ) : null;
     }
 
     // Going to think about implementing this as a stretch goal
@@ -347,7 +367,8 @@ var OrderForm = function (_React$Component) {
                     description + ' ($' + price + ')'
                   );
                 })
-              )
+              ),
+              _this2.renderPleaseSelect(type)
             );
           })
         ),
@@ -370,7 +391,7 @@ var OrderForm = function (_React$Component) {
           { id: 'buy-now' },
           _react2.default.createElement(
             'button',
-            null,
+            { onClick: this.handleBuyNowClick },
             'Buy it now ',
             '>'
           )
