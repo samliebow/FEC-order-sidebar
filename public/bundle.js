@@ -217,8 +217,8 @@ var OrderForm = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (OrderForm.__proto__ || Object.getPrototypeOf(OrderForm)).call(this, props));
 
     var getLowestPrice = function getLowestPrice(variationType) {
-      var prices = _this.props.data.variations[variationType].map(function (tuple) {
-        return tuple[1];
+      var prices = _this.props.data.variations[variationType].map(function (descPriceTuple) {
+        return descPriceTuple[1];
       });
       return Math.min.apply(Math, _toConsumableArray(prices));
     };
@@ -231,7 +231,7 @@ var OrderForm = function (_React$Component) {
       pleaseSelectShown: false
     };
     var makeQuantityOptions = function makeQuantityOptions(quantity) {
-      return Array(quantity + 1).fill(null) // Array of nulls of length quantity
+      return Array(quantity + 1).fill(null) // Array of nulls of length quantity + 1
       .map(function (nada, index) {
         return _react2.default.createElement(
           'option',
