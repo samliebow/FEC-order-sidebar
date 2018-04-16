@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
 const listingSchema = new mongoose.Schema({
-  listingNum: String,
-  listingName: String,
+  listingNum: { type: String, unique: true, dropDups: true },
+  listingName: { type: String, unique: true, dropDups: true },
   orderForm: {
     title: String,
     sellerName: String,
