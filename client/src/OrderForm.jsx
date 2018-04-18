@@ -116,7 +116,7 @@ class OrderForm extends React.Component {
 
         <div id="buy-now">
           <button onClick={this.handleBuyNowClick}>
-          Buy it now {'>'}
+          Buy it now {'>'} {/* Render the character > without offending JSX */}
           </button>
         </div>
 

@@ -6,16 +6,15 @@ class Shipping extends React.Component {
     super(props);
     this.state = {
       destCountry: 'United States',
-      destCountryInProgress: '',
-      // This feels hacky: I want to update state only once the input is submitted,
-      // but also want to maintain all state in React, not in the form.
+      destCountryOptionValue: '',
       destZip: 94102,
-      destZipInProgress: '',
+      destZipInputValue: '',
       destSelectShown: false,
     };
     this.toggleDestSelect = this.toggleDestSelect.bind(this);
     this.handleZipUpdate = this.handleZipUpdate.bind(this);
     this.handleCountryUpdate = this.handleCountryUpdate.bind(this);
+    this.countries = ['United States', 'Canada', 'Mexico', 'United Kingdom', 'France', 'Germany'];
   }
 
   toggleDestSelect() {
@@ -26,7 +25,7 @@ class Shipping extends React.Component {
 
   handleCountryUpdate(event) {
     this.setState({
-      destCountryInProgress: event.target.value,
+      destCountryOptionValue: event.target.value,
     });
   }
 
@@ -34,14 +33,14 @@ class Shipping extends React.Component {
     event.preventDefault();
     if (event.key.match(/[0-9]/)) {
       this.setState({
-        destZipInProgress: this.state.destZipInProgress + event.key,
+        destZipInputValue: this.state.destZipInputValue + event.key,
       });
     } else if (event.key === 'Enter') {
       this.setState({
-        destZip: this.state.destZipInProgress || this.state.destZip,
-        destCountry: this.state.destCountryInProgress || this.state.destCountry,
-        destZipInProgress: '',
-        destCountryInProgress: '',
+        destZip: this.state.destZipInputValue || this.state.destZip,
+        destCountry: this.state.destCountryOptionValue || this.state.destCountry,
+        destZipInputValue: '',
+        destCountryOptionValue: '',
       });
     }
   }
@@ -55,14 +54,12 @@ class Shipping extends React.Component {
         </div>
         <form>
           <select defaultValue="United States" onChange={this.handleCountryUpdate}>
-            {/* Add more options and remove hardcoding later */}
-            <option value="United States">United States</option>
-            <option value="Canada">Canada</option>
+            {this.countries.map(country => <option value={country}>{country}</option>)}
           </select>
           <input
             type="text"
             placeholder={this.state.destZip}
-            value={this.state.destZipInProgress}
+            value={this.state.destZipInputValue}
             onKeyPress={this.handleZipUpdate}
           />
         </form>
@@ -78,7 +75,6 @@ class Shipping extends React.Component {
 
         <b>Ready to ship in {this.props.data.timeToShip}</b> <br />
         From {this.props.data.shipOrigin} <br />
-        {/* Not sure if I should be using spans with <br>, divs, or something else */}
         <span>$7.35 shipping to </span>
         <span
           id="destination"
