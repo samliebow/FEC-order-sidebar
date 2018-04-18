@@ -94,4 +94,4 @@ OrderSidebar.propTypes = {
   }),
 };
 
-ReactDOM.render(<OrderSidebar />, document.getElementById('order-sidebar'));
+export default OrderSidebar;
