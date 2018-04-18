@@ -19,8 +19,15 @@
     "test:coverage": "jest --coverage"
   },
   "jest": {
-    "setupFiles": ["./test/jestsetup.js"],
-    "snapshotSerializers": ["enzyme-to-json/serializer"]
+    "setupFiles": [
+      "./test/jestsetup.js"
+    ],
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
+    "moduleNameMapper": {
+      "^.+\\.(css|scss)$": "identity-obj-proxy"
+    }
   },
   "dependencies": {
     "body-parser": "^1.18.2",
@@ -38,6 +45,7 @@
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
+    "css-modules": "^0.3.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "enzyme-to-json": "^3.3.3",
@@ -48,6 +56,7 @@
     "eslint-plugin-jsx-a11y": "^6.0.2",
     "eslint-plugin-react": "^7.4.0",
     "faker": "^4.1.0",
+    "identity-obj-proxy": "^3.0.0",
     "jest": "^22.4.3",
     "react-test-renderer": "^16.3.2",
     "webpack": "^4.5.0",
