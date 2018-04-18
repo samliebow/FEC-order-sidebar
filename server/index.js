@@ -16,18 +16,26 @@ app.get(
   (req, res) => {
     const { listingNum, listingName } = req.params;
     Listing.findOne({ listingNum, listingName })
-      .then(result => res.send(JSON.stringify(result)))
-      .catch(error => console.error(error));
+      .then((result) => {
+        if (result) { // If no match, result is null
+          res.send(JSON.stringify(result));
+        } else {
+          res.status(404).send('No listing found');
+        }
+      });
   },
 );
 
 app.post(
   '/listings',
   (req, res) => Listing.create(req.body)
-    .then(() => res.send('Listing saved'))
-    .catch((error) => {
-      console.error(error);
-      res.status(500).send('Failed to save listing');
+    .then((success, error) => {
+      if (success) {
+        res.send('Listing saved');
+      } else {
+        console.error(error);
+        res.status(500).send('Failed to save listing');
+      }
     }),
 );
 
