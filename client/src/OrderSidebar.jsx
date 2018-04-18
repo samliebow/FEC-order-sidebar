@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import OrderForm from './OrderForm';
 import Overview from './Overview';
@@ -15,7 +14,7 @@ class OrderSidebar extends React.Component {
   }
 
   componentDidMount() {
-    fetch(`http://127.0.0.1:541${window.location.pathname}data`)
+    fetch(`http://127.0.0.1:1541${window.location.pathname}data`)
       .then(response => response.json())
       .then(data => this.setState({ data }))
       .catch(error => console.error(error));
