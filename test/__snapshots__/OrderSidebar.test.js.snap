@@ -1,0 +1,65 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render four subcomponents with appropriate data prop 1`] = `
+<div
+  id="container"
+>
+  <OrderForm
+    data={
+      Object {
+        "contactName": "Jamie [Harknett]",
+        "quantity": 29,
+        "sellerName": "HarknettPrints",
+        "title": "Star Trek - Captains Oath - Mission Oath - Quote Typography Art Poster Print - (Available in Many Sizes)",
+        "variationTypes": Array [
+          "Size",
+        ],
+        "variations": Object {
+          "Size": Array [
+            Array [
+              "6x4 inches",
+              7.29,
+            ],
+            Array [
+              "5x7 inches",
+              8.84,
+            ],
+            Array [
+              "8x10 inches",
+              14.74,
+            ],
+          ],
+        },
+      }
+    }
+  />
+  <Overview
+    data={
+      Object {
+        "acceptGiftCards": true,
+        "isHandmade": true,
+        "isProduct": true,
+        "materials": Array [
+          "Satin Photo Card",
+          "Photoshop",
+        ],
+        "numFavorites": 2573,
+        "numReviews": 1995,
+        "whenMade": "To order",
+      }
+    }
+  />
+  <Shipping
+    data={
+      Object {
+        "acceptCancel": false,
+        "acceptExchange": true,
+        "acceptReturn": true,
+        "shipOrigin": "United Kingdom",
+        "timeToShip": "1-2 business days",
+      }
+    }
+  />
+  <Favorite />
+</div>
+`;
