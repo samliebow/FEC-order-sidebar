@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  entry: path.resolve(__dirname, 'client', 'src', 'order-sidebar.jsx'),
+  entry: path.resolve(__dirname, 'client', 'src', 'OrderSidebar.jsx'),
   output: {
     path: path.resolve(__dirname, 'public'),
     filename: 'bundle.js',
@@ -9,6 +9,9 @@ module.exports = {
   watch: true,
   devtool: 'source-map',
   mode: 'development',
+  resolve: {
+    extensions: ['*', '.js', '.jsx'],
+  },
   module: {
     rules: [
       {

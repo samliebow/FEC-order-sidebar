@@ -1,0 +1,12 @@
+#container {
+  width: 392px;
+  height: 1500px;
+}
+
+.main-item {
+  border-top-style: ridge;
+}
+
+#favorite-component {
+  border-bottom-style: ridge;
+}

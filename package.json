@@ -18,10 +18,13 @@
   "dependencies": {
     "express": "^4.16.3",
     "mongoose": "^5.0.14",
+    "prop-types": "^15.6.1",
     "react": "^16.3.1",
     "react-dom": "^16.3.1"
   },
   "devDependencies": {
+    "ajv": "^6.0.0",
+    "ajv-keywords": "^3.1.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.6.1",
