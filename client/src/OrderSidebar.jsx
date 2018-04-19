@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import fetch from 'isomorphic-fetch';
 
 import OrderForm from './OrderForm';
 import Overview from './Overview';
@@ -20,10 +19,7 @@ class OrderSidebar extends React.Component {
       .then(response => response.json())
       .then(data => this.setState({ data }))
       .catch((error) => {
-        // Hacky way of suppressing an error when running Jest test
-        if (!error.message.includes('blankdata')) {
-          console.error(error);
-        }
+        console.error(error);
       });
   }
 

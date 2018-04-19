@@ -1,6 +1,5 @@
 import React from 'react';
 import OrderForm from '../client/src/OrderForm.jsx';
-import renderer from 'react-test-renderer';
 
 const testData = {
   title: 'Widget',
