@@ -14,6 +14,13 @@ class OrderSidebar extends React.Component {
     };
   }
 
+  componentDidMount() {
+    fetch(`http://127.0.0.1:541${window.location.pathname}data`)
+      .then(response => response.json())
+      .then(data => this.setState({ data }))
+      .catch(error => console.error(error));
+  }
+
   render() {
     return (
       <div id="container">
