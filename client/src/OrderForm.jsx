@@ -10,7 +10,8 @@ class OrderForm extends React.Component {
 
     this.state = {
       singlePrice: lowestPrice,
-      totalPrice: lowestPrice,
+      // toFixed solves floating point issue; it returns a string, but that's not a problem here.
+      totalPrice: lowestPrice.toFixed(2),
       quantity: 1,
       variation: '',
       pleaseSelectShown: false, // e.g. "Please select a size"
@@ -29,7 +30,10 @@ class OrderForm extends React.Component {
 
   makeQuantityOptions() {
     return Array(this.props.data.quantity + 1).fill(null) // Array of nulls of length quantity + 1
-      .map((nada, index) => <option className="quantity" key={index} value={index}>{index}</option>);
+      .map((nada, index) => (
+        <option className="quantity" key={index} value={index}>
+          {index}
+        </option>));
   }
 
   handleVariationSelect(event) {
@@ -41,7 +45,7 @@ class OrderForm extends React.Component {
       singlePrice: price,
       variation: description,
       pleaseSelectShown: false,
-      totalPrice: price * this.state.quantity,
+      totalPrice: (price * this.state.quantity).toFixed(2),
     });
   }
 
@@ -49,7 +53,7 @@ class OrderForm extends React.Component {
     const quantity = +event.target.value;
     this.setState({
       quantity,
-      totalPrice: this.state.singlePrice * quantity,
+      totalPrice: (this.state.singlePrice * quantity).toFixed(2),
     });
   }
 
@@ -91,7 +95,7 @@ class OrderForm extends React.Component {
 
                     return (
                       <option className="variation" key={description} value={variationTuple}>
-                        {`${description} ($${price})`}
+                        {`${description} ($${price.toFixed(2)})`}
                       </option>
                     );
                   })
