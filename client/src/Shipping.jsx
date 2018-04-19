@@ -54,7 +54,7 @@ class Shipping extends React.Component {
         </div>
         <form>
           <select defaultValue="United States" onChange={this.handleCountryUpdate}>
-            {this.countries.map(country => <option value={country}>{country}</option>)}
+            {this.countries.map(country => <option key={country} value={country}>{country}</option>)}
           </select>
           <input
             type="text"
