@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`render four subcomponents with appropriate data prop 1`] = `
+exports[`renders four subcomponents with appropriate data prop 1`] = `
 <div
   id="container"
 >

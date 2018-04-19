@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import fetch from 'isomorphic-fetch';
+
 import OrderForm from './OrderForm';
 import Overview from './Overview';
 import Shipping from './Shipping';
 import Favorite from './Favorite';
-import fetch from 'isomorphic-fetch';
 
 class OrderSidebar extends React.Component {
   constructor(props) {
