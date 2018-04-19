@@ -29,7 +29,7 @@ class OrderForm extends React.Component {
 
   makeQuantityOptions() {
     return Array(this.props.data.quantity + 1).fill(null) // Array of nulls of length quantity + 1
-      .map((nada, index) => <option key={index} value={index}>{index}</option>);
+      .map((nada, index) => <option className="quantity" key={index} value={index}>{index}</option>);
   }
 
   handleVariationSelect(event) {
@@ -80,7 +80,7 @@ class OrderForm extends React.Component {
 
         <div id="variations">
           {this.props.data.variationTypes.map(type => (
-            <div key={type} className="variation">
+            <div key={type} className="variation-type">
               <div className="variation-name">{type}</div>
 
               <select onChange={this.handleVariationSelect}>
@@ -90,7 +90,7 @@ class OrderForm extends React.Component {
                     const [description, price] = variationTuple;
 
                     return (
-                      <option key={description} value={variationTuple}>
+                      <option className="variation" key={description} value={variationTuple}>
                         {`${description} ($${price})`}
                       </option>
                     );
