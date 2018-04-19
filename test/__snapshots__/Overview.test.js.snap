@@ -1,0 +1,126 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Overview should display "handmade" text if item is handmade 1`] = `
+<div
+  className="main-item"
+  id="overview"
+>
+  <h4>
+    Overview
+  </h4>
+  <ul>
+    <li
+      className="overview-list"
+    >
+      Handmade supply
+    </li>
+    <li
+      className="overview-list"
+    >
+      Materials: 
+      flesh, blood
+    </li>
+    <li
+      className="overview-list"
+    >
+      Vintage item from the 
+      '
+      90s
+    </li>
+    <li
+      className="overview-list"
+    >
+      Feedback:
+      <a
+        href="#"
+      >
+        100
+         reviews
+      </a>
+    </li>
+    <li
+      className="overview-list"
+    >
+      Favorited by:
+      <a
+        href="#"
+      >
+        200
+         people
+      </a>
+    </li>
+  </ul>
+  <div>
+    <span
+      id="gift-card-icon"
+    >
+      ((Img))
+    </span>
+    <span
+      id="gift-cart-msg"
+    >
+      This shop accepts Etsy gift cards
+    </span>
+  </div>
+</div>
+`;
+
+exports[`Overview should not display "handmade" text if item is not handmade 1`] = `
+<div
+  className="main-item"
+  id="overview"
+>
+  <h4>
+    Overview
+  </h4>
+  <ul>
+    <li
+      className="overview-list"
+    >
+      Materials: 
+      flesh, blood
+    </li>
+    <li
+      className="overview-list"
+    >
+      Vintage item from the 
+      '
+      90s
+    </li>
+    <li
+      className="overview-list"
+    >
+      Feedback:
+      <a
+        href="#"
+      >
+        100
+         reviews
+      </a>
+    </li>
+    <li
+      className="overview-list"
+    >
+      Favorited by:
+      <a
+        href="#"
+      >
+        200
+         people
+      </a>
+    </li>
+  </ul>
+  <div>
+    <span
+      id="gift-card-icon"
+    >
+      ((Img))
+    </span>
+    <span
+      id="gift-cart-msg"
+    >
+      This shop accepts Etsy gift cards
+    </span>
+  </div>
+</div>
+`;

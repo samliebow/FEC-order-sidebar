@@ -16,7 +16,7 @@ const Overview = (props) => {
       return <li className="overview-list">Made to order</li>;
     }
     if (props.data.whenMade !== 'Recently') {
-      return <li className="overview-list">Vintage item from the ${props.data.whenMade}</li>;
+      return <li className="overview-list">Vintage item from the {'\''}{props.data.whenMade}</li>;
     }
     return null;
   };
