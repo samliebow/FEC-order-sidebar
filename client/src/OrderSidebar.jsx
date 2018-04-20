@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import CSSModules from 'react-css-modules';
 
 import OrderForm from './OrderForm';
 import Overview from './Overview';
 import Shipping from './Shipping';
 import Favorite from './Favorite';
+import styles from '../styles/OrderSidebar.css';
 
 class OrderSidebar extends React.Component {
   constructor(props) {
@@ -25,7 +27,7 @@ class OrderSidebar extends React.Component {
 
   render() {
     return (
-      <div id="container">
+      <div styleName="container">
         <OrderForm data={this.state.data.orderForm} />
         <Overview data={this.state.data.overview} />
         <Shipping data={this.state.data.shipping} />
@@ -117,4 +119,4 @@ OrderSidebar.propTypes = {
   }),
 };
 
-export default OrderSidebar;
+export default CSSModules(OrderSidebar, styles);
