@@ -146,7 +146,7 @@ class OrderForm extends React.Component {
                 </option>
                 {dimension.options.map(optionName => this.renderOption(optionName, dimIndex))}
               </select>
-              {this.renderPleaseSelect(dimension)}
+              {this.renderPleaseSelect(dimension.name)}
             </div>))}
 
         </div>
