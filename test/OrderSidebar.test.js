@@ -31,7 +31,6 @@ describe('orderSidebar', () => {
           ['White', 'L', 9.7],
         ],
       },
-      quantity: 3,
     },
     overview: {
       materials: ['flesh', 'blood'],

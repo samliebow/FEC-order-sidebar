@@ -5,14 +5,14 @@ class OrderForm extends React.Component {
   constructor(props) {
     super(props);
     const lowestPrice = this.getLowestPrice();
-    // slice to convert from 0-based to 1-based numbering
-    this.quantityOptions = this.makeQuantityOptions().slice(1);
+    const lowestPriceQuantity = this.getLowestPriceQuantity();
 
     this.state = {
       singlePrice: lowestPrice,
       // toFixed solves floating point issue; it returns a string, but that's not a problem here.
-      totalPrice: lowestPrice.toFixed(2),
+      totalPrice: `${lowestPrice.toFixed(2)}+`,
       quantity: 1,
+      variantQuantity: lowestPriceQuantity,
       dimensionZeroVariant: '',
       dimensionOneVariant: '',
       pleaseSelectShownZero: false, // e.g. "Please select a size"
@@ -28,6 +28,12 @@ class OrderForm extends React.Component {
     // each variant is a dim-1-option, dim-2-option, price, quantity tuple
     const prices = variantsArray.map(variant => variant[2]);
     return Math.min(...prices);
+  }
+
+  getLowestPriceQuantity(variantsArray = this.props.data.variants.allVariants) {
+    const lowestPrice = this.getLowestPrice(variantsArray);
+    return variantsArray
+      .filter(variant => variant[2] === lowestPrice)[0][3];
   }
 
   getMatchingVariants(optionName, dimensionNum) {
@@ -58,20 +64,23 @@ class OrderForm extends React.Component {
     } else {
       matchingVariants = this.getMatchingVariants(optionName, dimensionNum);
     }
-    const price = this.getLowestPrice(matchingVariants);
+    const singlePrice = this.getLowestPrice(matchingVariants);
+    const variantQuantity = this.getLowestPriceQuantity(matchingVariants);
     if (dimensionNum === 0) {
       this.setState({
         dimensionZeroVariant: optionName,
-        singlePrice: price,
-        totalPrice: (price * this.state.quantity).toFixed(2),
+        singlePrice,
+        totalPrice: (singlePrice * this.state.quantity).toFixed(2),
         pleaseSelectShownZero: false,
+        variantQuantity,
       });
     } else {
       this.setState({
         dimensionOneVariant: optionName,
-        singlePrice: price,
-        totalPrice: (price * this.state.quantity).toFixed(2),
+        singlePrice,
+        totalPrice: (singlePrice * this.state.quantity).toFixed(2),
         pleaseSelectShownOne: false,
+        variantQuantity,
       });
     }
   }
@@ -94,12 +103,12 @@ class OrderForm extends React.Component {
     // More stuff will go here when I add modals
   }
 
-  makeQuantityOptions() {
-    return Array(this.props.data.quantity + 1).fill(null) // Array of nulls of length quantity + 1
+  makeQuantityOptions(quantity) {
+    return Array(quantity + 1).fill(null) // Array of nulls of length quantity + 1
       .map((nada, index) => (
         <option className="quantity" key={index} value={index}>
           {index}
-        </option>));
+        </option>)).slice(1);
   }
 
   renderOption(optionName, dimensionNum) {
@@ -160,7 +169,7 @@ class OrderForm extends React.Component {
         <div id="quantity">
           <div>Quantity</div>
           <select onChange={this.handleQuantitySelect}>
-            {this.quantityOptions}
+            {this.makeQuantityOptions(this.state.variantQuantity)}
           </select>
         </div>
 
