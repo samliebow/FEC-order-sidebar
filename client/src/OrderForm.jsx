@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styles from '../../public/styles.css';
 
 class OrderForm extends React.Component {
   constructor(props) {
@@ -141,7 +142,7 @@ class OrderForm extends React.Component {
 
   render() {
     return (
-      <div className="main-item" id="order-form">
+      <div className={styles.mainItem} id="order-form">
         <h4 id="title">{this.props.data.title}</h4>
 
         <div id="price-and-question">
