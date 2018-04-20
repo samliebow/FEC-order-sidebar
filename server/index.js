@@ -29,13 +29,10 @@ app.get(
 app.post(
   '/listings',
   (req, res) => Listing.create(req.body)
-    .then((success, error) => {
-      if (success) {
-        res.send('Listing saved');
-      } else {
-        console.error(error);
-        res.status(500).send('Failed to save listing');
-      }
+    .then(() => res.send('Listing saved'))
+    .catch((error) => {
+      console.error(error);
+      res.status(500).send('Failed to save listing');
     }),
 );
 
