@@ -16,8 +16,13 @@ app.get(
   (req, res) => {
     const { listingNum, listingName } = req.params;
     Listing.findOne({ listingNum, listingName })
-      .then(result => res.send(JSON.stringify(result)))
-      .catch(error => console.error(error));
+      .then((result) => {
+        if (result) { // If no match, result is null
+          res.send(JSON.stringify(result));
+        } else {
+          res.status(404).send('No listing found');
+        }
+      });
   },
 );
 
@@ -36,5 +41,5 @@ mongoose.connection.on('error', err => console.error(`Database connection error:
 mongoose.connection.once('open', () => {
   console.log('Connection to database successful!');
 
-  app.listen(541, () => console.log('Listening on port 541...'));
+  app.listen(1541, () => console.log('Listening on port 1541...'));
 });

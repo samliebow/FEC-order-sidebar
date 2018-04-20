@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  entry: path.resolve(__dirname, 'client', 'src', 'OrderSidebar.jsx'),
+  entry: path.resolve(__dirname, 'client', 'src', 'render.jsx'),
   output: {
     path: path.resolve(__dirname, 'public'),
     filename: 'bundle.js',
@@ -19,7 +19,7 @@ module.exports = {
         include: [path.resolve(__dirname, 'client', 'src')], // In this directory
         loader: 'babel-loader', // Use this loader (npm package)
         options: {
-          presets: [['react'], ['env', {displayErrorDetails: true}]],
+          presets: [['react'], ['env', { displayErrorDetails: true }]],
         }, // Pass in these arguments to the loader
       },
     ],

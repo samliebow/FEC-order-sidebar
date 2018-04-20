@@ -4,24 +4,9 @@ import PropTypes from 'prop-types';
 class OrderForm extends React.Component {
   constructor(props) {
     super(props);
-    /*
-    A remaining issue here is handling multiple variation types.
-    Etsy allows two per item, and both can be determinative of price.
-    I'll need to refactor to allow for that: the code right now
-    handles only one variation properly.
-    */
-    const getLowestPrice = (variationType) => {
-      const prices = this.props.data.variations[variationType]
-        .map(descriptionPriceTuple => descriptionPriceTuple[1]);
-      return Math.min(...prices);
-    };
-    const lowestPrice = getLowestPrice(this.props.data.variationTypes[0]);
-
-    const makeQuantityOptions = quantity =>
-      Array(quantity + 1).fill(null) // Array of nulls of length quantity + 1
-        .map((nada, index) => <option key={index} value={index}>{index}</option>);
-    // quantity + 1 and .slice(1) to convert from 0-based to 1-based numbering
-    this.quantityOptions = makeQuantityOptions(this.props.data.quantity).slice(1);
+    const lowestPrice = this.getLowestPrice(this.props.data.variationTypes[0]);
+    // slice to convert from 0-based to 1-based numbering
+    this.quantityOptions = this.makeQuantityOptions().slice(1);
 
     this.state = {
       singlePrice: lowestPrice,
@@ -34,6 +19,17 @@ class OrderForm extends React.Component {
     this.handleVariationSelect = this.handleVariationSelect.bind(this);
     this.handleQuantitySelect = this.handleQuantitySelect.bind(this);
     this.handleBuyNowClick = this.handleBuyNowClick.bind(this);
+  }
+
+  getLowestPrice(variationType) {
+    const prices = this.props.data.variations[variationType]
+      .map(descriptionPriceTuple => descriptionPriceTuple[1]);
+    return Math.min(...prices);
+  }
+
+  makeQuantityOptions() {
+    return Array(this.props.data.quantity + 1).fill(null) // Array of nulls of length quantity + 1
+      .map((nada, index) => <option className="quantity" key={index} value={index}>{index}</option>);
   }
 
   handleVariationSelect(event) {
@@ -84,7 +80,7 @@ class OrderForm extends React.Component {
 
         <div id="variations">
           {this.props.data.variationTypes.map(type => (
-            <div key={type} className="variation">
+            <div key={type} className="variation-type">
               <div className="variation-name">{type}</div>
 
               <select onChange={this.handleVariationSelect}>
@@ -94,7 +90,7 @@ class OrderForm extends React.Component {
                     const [description, price] = variationTuple;
 
                     return (
-                      <option key={description} value={variationTuple}>
+                      <option className="variation" key={description} value={variationTuple}>
                         {`${description} ($${price})`}
                       </option>
                     );
