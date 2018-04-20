@@ -10,7 +10,8 @@ class OrderForm extends React.Component {
     this.state = {
       singlePrice: lowestPrice,
       // toFixed solves floating point issue; it returns a string, but that's not a problem here.
-      totalPrice: `${lowestPrice.toFixed(2)}+`,
+      // The ternary adds a '+' iff there are variants.
+      totalPrice: `${lowestPrice.toFixed(2)}${this.props.data.variants.dimensions.length ? '+' : ''}`,
       quantity: 1,
       variantQuantity: lowestPriceQuantity,
       dimensionZeroVariant: '',
