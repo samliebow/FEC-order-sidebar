@@ -15,7 +15,8 @@ class OrderForm extends React.Component {
       quantity: 1,
       dimensionZeroVariant: '',
       dimensionOneVariant: '',
-      pleaseSelectShown: false, // e.g. "Please select a size"
+      pleaseSelectShownZero: false, // e.g. "Please select a size"
+      pleaseSelectShownOne: false,
     };
 
     this.handleOptionSelect = this.handleOptionSelect.bind(this);
@@ -63,14 +64,14 @@ class OrderForm extends React.Component {
         dimensionZeroVariant: optionName,
         singlePrice: price,
         totalPrice: (price * this.state.quantity).toFixed(2),
-        pleaseSelectShown: false,
+        pleaseSelectShownZero: false,
       });
     } else {
       this.setState({
         dimensionOneVariant: optionName,
         singlePrice: price,
         totalPrice: (price * this.state.quantity).toFixed(2),
-        pleaseSelectShown: false,
+        pleaseSelectShownOne: false,
       });
     }
   }
@@ -84,8 +85,11 @@ class OrderForm extends React.Component {
   }
 
   handleBuyNowClick(event) {
-    if (!this.state.variation) {
-      this.setState({ pleaseSelectShown: true });
+    if (!this.state.dimensionZeroVariant) {
+      this.setState({ pleaseSelectShownZero: true });
+    }
+    if (!this.state.dimensionOneVariant) {
+      this.setState({ pleaseSelectShownOne: true });
     }
     // More stuff will go here when I add modals
   }
@@ -114,8 +118,11 @@ class OrderForm extends React.Component {
     );
   }
 
-  renderPleaseSelect(dimension) {
-    return this.state.pleaseSelectShown ?
+  renderPleaseSelect(dimension, dimensionNum) {
+    const test = dimensionNum === 0 ?
+      this.state.pleaseSelectShownZero :
+      this.state.pleaseSelectShownOne;
+    return test ?
       <div className="please-select">
         Please select a {dimension.toLowerCase()}
       </div> :
@@ -133,20 +140,19 @@ class OrderForm extends React.Component {
         </div>
 
         <div id="variants">
-
-          {this.props.data.variants.dimensions.map((dimension, dimIndex) => (
+          {this.props.data.variants.dimensions.map((dimension, dimensionNum) => (
             <div key={dimension.name} className="variant-dimension">
               <div className="variant-dimension-name">{dimension.name}</div>
               <select
-                value={dimIndex ? this.state.dimensionOneVariant : this.state.dimensionZeroVariant}
-                onChange={event => this.handleOptionSelect(event, dimIndex)}
+                value={dimensionNum ? this.state.dimensionOneVariant : this.state.dimensionZeroVariant}
+                onChange={event => this.handleOptionSelect(event, dimensionNum)}
               >
-                <option className="variant-option" key={`noChoice${dimIndex}`} value="">
+                <option className="variant-option" key={`noChoice${dimensionNum}`} value="">
                   Please select an option...
                 </option>
-                {dimension.options.map(optionName => this.renderOption(optionName, dimIndex))}
+                {dimension.options.map(optionName => this.renderOption(optionName, dimensionNum))}
               </select>
-              {this.renderPleaseSelect(dimension.name)}
+              {this.renderPleaseSelect(dimension.name, dimensionNum)}
             </div>))}
 
         </div>
