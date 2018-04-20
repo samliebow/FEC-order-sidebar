@@ -41,9 +41,29 @@ OrderSidebar.defaultProps = {
       title: 'Star Trek - Captains Oath - Mission Oath - Quote Typography Art Poster Print - (Available in Many Sizes)',
       sellerName: 'HarknettPrints',
       contactName: 'Jamie [Harknett]',
-      variationTypes: ['Size'],
-      variations: {
-        Size: [['6x4 inches', 7.29], ['5x7 inches', 8.84], ['8x10 inches', 14.74]],
+      variants: {
+        dimensions: [
+          {
+            name: 'Color',
+            options: ['Red', 'Blue', 'Yellow'],
+          },
+          {
+            name: 'Size',
+            options: ['Small', 'Medium', 'Big'],
+          },
+        ],
+
+        allVariants: [
+          ['Red', 'Small', 7.5],
+          ['Red', 'Medium', 7.6],
+          ['Red', 'Big', 7.7],
+          ['Blue', 'Small', 4.5],
+          ['Blue', 'Medium', 4.6],
+          ['Blue', 'Big', 4.7],
+          ['Yellow', 'Small', 9.5],
+          ['Yellow', 'Medium', 9.6],
+          ['Yellow', 'Big', 9.7],
+        ],
       },
       quantity: 29,
     },
@@ -72,8 +92,10 @@ OrderSidebar.propTypes = {
       title: PropTypes.string.isRequired,
       sellerName: PropTypes.string.isRequired,
       contactName: PropTypes.string.isRequired,
-      variationTypes: PropTypes.arrayOf(PropTypes.string),
-      variations: PropTypes.objectOf(PropTypes.array),
+      variants: PropTypes.shape({
+        dimensions: PropTypes.arrayOf(PropTypes.object),
+        allVariants: PropTypes.arrayOf(PropTypes.array),
+      }),
       quantity: PropTypes.number,
       // numInCarts: PropTypes.number, // For special message
     }).isRequired,
