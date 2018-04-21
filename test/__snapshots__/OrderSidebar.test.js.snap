@@ -8,26 +8,82 @@ exports[`orderSidebar renders four subcomponents with appropriate data prop 1`] 
     data={
       Object {
         "contactName": "Jamie [Harknett]",
-        "quantity": 29,
         "sellerName": "HarknettPrints",
         "title": "Star Trek - Captains Oath - Mission Oath - Quote Typography Art Poster Print - (Available in Many Sizes)",
-        "variationTypes": Array [
-          "Size",
-        ],
-        "variations": Object {
-          "Size": Array [
+        "variants": Object {
+          "allVariants": Array [
             Array [
-              "6x4 inches",
-              7.29,
+              "Red",
+              "Small",
+              7.5,
+              5,
             ],
             Array [
-              "5x7 inches",
-              8.84,
+              "Red",
+              "Medium",
+              7.6,
+              2,
             ],
             Array [
-              "8x10 inches",
-              14.74,
+              "Red",
+              "Big",
+              7.7,
+              3,
             ],
+            Array [
+              "Blue",
+              "Small",
+              4.5,
+              6,
+            ],
+            Array [
+              "Blue",
+              "Medium",
+              4.6,
+              1,
+            ],
+            Array [
+              "Blue",
+              "Big",
+              4.7,
+              9,
+            ],
+            Array [
+              "Yellow",
+              "Small",
+              9.5,
+              10,
+            ],
+            Array [
+              "Yellow",
+              "Medium",
+              9.6,
+              12,
+            ],
+            Array [
+              "Yellow",
+              "Big",
+              9.7,
+              13,
+            ],
+          ],
+          "dimensions": Array [
+            Object {
+              "name": "Color",
+              "options": Array [
+                "Red",
+                "Blue",
+                "Yellow",
+              ],
+            },
+            Object {
+              "name": "Size",
+              "options": Array [
+                "Small",
+                "Medium",
+                "Big",
+              ],
+            },
           ],
         },
       }

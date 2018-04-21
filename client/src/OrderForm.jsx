@@ -4,66 +4,137 @@ import PropTypes from 'prop-types';
 class OrderForm extends React.Component {
   constructor(props) {
     super(props);
-    const lowestPrice = this.getLowestPrice(this.props.data.variationTypes[0]);
-    // slice to convert from 0-based to 1-based numbering
-    this.quantityOptions = this.makeQuantityOptions().slice(1);
+    const lowestPrice = this.getLowestPrice();
+    const lowestPriceQuantity = this.getLowestPriceQuantity();
 
     this.state = {
       singlePrice: lowestPrice,
-      totalPrice: lowestPrice,
+      // toFixed solves floating point issue; it returns a string, but that's not a problem here.
+      // The ternary adds a '+' iff there are variants.
+      totalPrice: `${lowestPrice.toFixed(2)}${this.props.data.variants.dimensions.length ? '+' : ''}`,
       quantity: 1,
-      variation: '',
-      pleaseSelectShown: false, // e.g. "Please select a size"
+      variantQuantity: lowestPriceQuantity,
+      dimensionZeroVariant: '',
+      dimensionOneVariant: '',
+      pleaseSelectShownZero: false, // e.g. "Please select a size"
+      pleaseSelectShownOne: false,
     };
 
-    this.handleVariationSelect = this.handleVariationSelect.bind(this);
+    this.handleOptionSelect = this.handleOptionSelect.bind(this);
     this.handleQuantitySelect = this.handleQuantitySelect.bind(this);
     this.handleBuyNowClick = this.handleBuyNowClick.bind(this);
   }
 
-  getLowestPrice(variationType) {
-    const prices = this.props.data.variations[variationType]
-      .map(descriptionPriceTuple => descriptionPriceTuple[1]);
+  getLowestPrice(variantsArray = this.props.data.variants.allVariants) {
+    // each variant is a dim-1-option, dim-2-option, price, quantity tuple
+    const prices = variantsArray.map(variant => variant[2]);
     return Math.min(...prices);
   }
 
-  makeQuantityOptions() {
-    return Array(this.props.data.quantity + 1).fill(null) // Array of nulls of length quantity + 1
-      .map((nada, index) => <option className="quantity" key={index} value={index}>{index}</option>);
+  getLowestPriceQuantity(variantsArray = this.props.data.variants.allVariants) {
+    const lowestPrice = this.getLowestPrice(variantsArray);
+    return variantsArray
+      .filter(variant => variant[2] === lowestPrice)[0][3];
   }
 
-  handleVariationSelect(event) {
-    // Passing a tuple in as a select option's value converts it to a string
-    // separated by commas. This would potentially create problems
-    // if the description had commas in it.
-    const [description, price] = event.target.value.split(',');
-    this.setState({
-      singlePrice: price,
-      variation: description,
-      pleaseSelectShown: false,
-      totalPrice: price * this.state.quantity,
-    });
+  getMatchingVariants(optionName, dimensionNum) {
+    const optionMatches = this.props.data.variants.allVariants
+      .filter(variant => variant[dimensionNum] === optionName);
+
+    const otherVariantName = dimensionNum === 0 ?
+      this.state.dimensionOneVariant : this.state.dimensionZeroVariant;
+    const otherVariantSet = !!otherVariantName; // true if not empty
+
+    if (otherVariantSet) {
+      return optionMatches
+        .filter(variant => variant[+!dimensionNum] === otherVariantName); // +! is 0 if 1, 1 if 0
+    }
+    return optionMatches;
+  }
+
+  handleOptionSelect(event, dimensionNum) {
+    const optionName = event.target.value;
+    let matchingVariants;
+    const otherVariantName = dimensionNum === 0 ?
+      this.state.dimensionOneVariant : this.state.dimensionZeroVariant;
+    const otherVariantSet = !!otherVariantName;
+    if (!optionName && !otherVariantSet) {
+      matchingVariants = this.props.data.variants.allVariants;
+    } else if (!optionName) {
+      matchingVariants = this.getMatchingVariants(otherVariantName, +!dimensionNum);
+    } else {
+      matchingVariants = this.getMatchingVariants(optionName, dimensionNum);
+    }
+    const singlePrice = this.getLowestPrice(matchingVariants);
+    const variantQuantity = this.getLowestPriceQuantity(matchingVariants);
+    if (dimensionNum === 0) {
+      this.setState({
+        dimensionZeroVariant: optionName,
+        singlePrice,
+        totalPrice: (singlePrice * this.state.quantity).toFixed(2),
+        pleaseSelectShownZero: false,
+        variantQuantity,
+      });
+    } else {
+      this.setState({
+        dimensionOneVariant: optionName,
+        singlePrice,
+        totalPrice: (singlePrice * this.state.quantity).toFixed(2),
+        pleaseSelectShownOne: false,
+        variantQuantity,
+      });
+    }
   }
 
   handleQuantitySelect(event) {
     const quantity = +event.target.value;
     this.setState({
       quantity,
-      totalPrice: this.state.singlePrice * quantity,
+      totalPrice: (this.state.singlePrice * quantity).toFixed(2),
     });
   }
 
   handleBuyNowClick(event) {
-    if (!this.state.variation) {
-      this.setState({ pleaseSelectShown: true });
+    if (!this.state.dimensionZeroVariant) {
+      this.setState({ pleaseSelectShownZero: true });
+    }
+    if (!this.state.dimensionOneVariant) {
+      this.setState({ pleaseSelectShownOne: true });
     }
     // More stuff will go here when I add modals
   }
 
-  renderPleaseSelect(variationType) {
-    return this.state.pleaseSelectShown ?
+  makeQuantityOptions(quantity) {
+    return Array(quantity + 1).fill(null) // Array of nulls of length quantity + 1
+      .map((nada, index) => (
+        <option className="quantity" key={index} value={index}>
+          {index}
+        </option>)).slice(1);
+  }
+
+  renderOption(optionName, dimensionNum) {
+    const matchingVariants = this.getMatchingVariants(optionName, dimensionNum);
+    let price;
+    if (matchingVariants.length === 1) {
+      price = matchingVariants[0][2].toFixed(2);
+    } else {
+      const prices = matchingVariants.map(variant => variant[2]);
+      price = `${Math.min(...prices).toFixed(2)}-${Math.max(...prices).toFixed(2)}`;
+    }
+    return (
+      <option className="variant-option" key={optionName} value={optionName}>
+        {`${optionName} ($${price})`}
+      </option>
+    );
+  }
+
+  renderPleaseSelect(dimension, dimensionNum) {
+    const test = dimensionNum === 0 ?
+      this.state.pleaseSelectShownZero :
+      this.state.pleaseSelectShownOne;
+    return test ?
       <div className="please-select">
-        Please select a {variationType.toLowerCase()}
+        Please select a {dimension.toLowerCase()}
       </div> :
       null;
   }
@@ -78,36 +149,28 @@ class OrderForm extends React.Component {
           <span id="q-span"><button id="q-button">Ask a question</button></span>
         </div>
 
-        <div id="variations">
-          {this.props.data.variationTypes.map(type => (
-            <div key={type} className="variation-type">
-              <div className="variation-name">{type}</div>
-
-              <select onChange={this.handleVariationSelect}>
-
-                {this.props.data.variations[type]
-                  .map((variationTuple) => {
-                    const [description, price] = variationTuple;
-
-                    return (
-                      <option className="variation" key={description} value={variationTuple}>
-                        {`${description} ($${price})`}
-                      </option>
-                    );
-                  })
-                }
-
+        <div id="variants">
+          {this.props.data.variants.dimensions.map((dimension, dimensionNum) => (
+            <div key={dimension.name} className="variant-dimension">
+              <div className="variant-dimension-name">{dimension.name}</div>
+              <select
+                value={dimensionNum ? this.state.dimensionOneVariant : this.state.dimensionZeroVariant}
+                onChange={event => this.handleOptionSelect(event, dimensionNum)}
+              >
+                <option className="variant-option" key={`noChoice${dimensionNum}`} value="">
+                  Please select an option...
+                </option>
+                {dimension.options.map(optionName => this.renderOption(optionName, dimensionNum))}
               </select>
+              {this.renderPleaseSelect(dimension.name, dimensionNum)}
+            </div>))}
 
-              {this.renderPleaseSelect(type)}
-            </div>
-          ))}
         </div>
 
         <div id="quantity">
           <div>Quantity</div>
           <select onChange={this.handleQuantitySelect}>
-            {this.quantityOptions}
+            {this.makeQuantityOptions(this.state.variantQuantity)}
           </select>
         </div>
 
@@ -133,8 +196,10 @@ OrderForm.propTypes = {
     title: PropTypes.string.isRequired,
     sellerName: PropTypes.string.isRequired,
     contactName: PropTypes.string.isRequired,
-    variationTypes: PropTypes.arrayOf(PropTypes.string),
-    variations: PropTypes.objectOf(PropTypes.array),
+    variants: PropTypes.shape({
+      dimensions: PropTypes.arrayOf(PropTypes.object),
+      allVariants: PropTypes.arrayOf(PropTypes.array),
+    }),
     quantity: PropTypes.number,
     // numInCarts: PropTypes.number,
   }).isRequired,

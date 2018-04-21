@@ -9,21 +9,37 @@ const shipOriginTypes = ['United States', 'United Kingdom', 'Canada'];
 const randInt = highest => 1 + Math.floor(Math.random() * highest);
 const randBool = () => !Math.round(Math.random());
 const randEl = array => array[Math.floor(Math.random() * array.length)];
-const makeRandVariations = (variationTypes) => {
-  const makeVariationOptions = (num) => {
-    const options = [];
-    while (options.length < num) {
-      // Options are description-price tuples
-      // Picks random price between 0.01-100.00
-      options.push([faker.random.word(), randInt(10000) / 100]);
-    }
-    return options;
-  };
-  const variations = {};
-  variationTypes.forEach((type) => {
-    variations[type] = makeVariationOptions(randInt(7));
-  });
-  return variations;
+
+const makeVariants = () => {
+  const variantDimensions = Array(Math.floor(Math.random() * 3)).fill(null)
+    .map(() => {
+      const options = [];
+      for (let i = 0; i < (randInt(5) + 1); i++) {
+        options.push(faker.random.word());
+      }
+      return {
+        name: randEl(varTypes),
+        options,
+      };
+    });
+  if (!variantDimensions.length) {
+    // Listings with no variants are represented by a variants object
+    // where there's no dimensions and only one 'variant'.
+    return { dimensions: [], allVariants: [null, null, randInt(10000) / 100, randInt(50)] };
+  }
+
+  if (variantDimensions.length === 1) {
+    const allVariants = variantDimensions[0].options
+      .map(option => [option, null, randInt(10000) / 100, randInt(50)]);
+    return { dimensions: variantDimensions, allVariants };
+  }
+
+  const allVariants = [];
+  variantDimensions[0].options
+    .forEach(option => allVariants.push(...variantDimensions[1].options
+      .map(secondDimensionOption => (
+        [option, secondDimensionOption, randInt(10000) / 100, randInt(50)]))));
+  return { dimensions: variantDimensions, allVariants };
 };
 
 const makeRandWordArray = (len) => {
@@ -34,40 +50,32 @@ const makeRandWordArray = (len) => {
   return words;
 };
 
-const makeFake = (listingNum, listingName) => {
-  // I have to put these above the return so that 'variations' can reference them
-  const numVariationTypes = randInt(1); // Just selecting one variation type for now
-  // But this setup handles any number of them
-  const variationTypes = Array(numVariationTypes).fill(null).map(() => randEl(varTypes));
-  return {
-    listingNum, // Shorthand for listingNum = listingNum, per linter preference
-    listingName,
-    orderForm: {
-      title: faker.commerce.productName(),
-      sellerName: faker.random.word(),
-      contactName: faker.name.firstName(),
-      variationTypes,
-      variations: makeRandVariations(variationTypes),
-      quantity: randInt(25),
-    },
-    overview: {
-      materials: makeRandWordArray(randInt(7)),
-      isHandmade: randBool(),
-      isProduct: randBool(),
-      whenMade: randEl(whenMadeTypes),
-      numReviews: randInt(500),
-      numFavorites: randInt(500),
-      acceptGiftCards: randBool(),
-    },
-    shipping: {
-      timeToShip: randEl(timeToShipTypes),
-      shipOrigin: randEl(shipOriginTypes),
-      acceptReturn: randBool(),
-      acceptExchange: randBool(),
-      acceptCancel: randBool(),
-    },
-  };
-};
+const makeFake = (listingNum, listingName) => ({
+  listingNum, // Shorthand for listingNum = listingNum, per linter preference
+  listingName,
+  orderForm: {
+    title: faker.commerce.productName(),
+    sellerName: faker.random.word(),
+    contactName: faker.name.firstName(),
+    variants: makeVariants(),
+  },
+  overview: {
+    materials: makeRandWordArray(randInt(7)),
+    isHandmade: randBool(),
+    isProduct: randBool(),
+    whenMade: randEl(whenMadeTypes),
+    numReviews: randInt(500),
+    numFavorites: randInt(500),
+    acceptGiftCards: randBool(),
+  },
+  shipping: {
+    timeToShip: randEl(timeToShipTypes),
+    shipOrigin: randEl(shipOriginTypes),
+    acceptReturn: randBool(),
+    acceptExchange: randBool(),
+    acceptCancel: randBool(),
+  },
+});
 
 const fakes = listingIds.map(({ listingNum, listingName }) => makeFake(listingNum, listingName));
 module.exports = fakes;

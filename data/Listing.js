@@ -7,8 +7,10 @@ const listingSchema = new mongoose.Schema({
     title: String,
     sellerName: String,
     contactName: String,
-    variationTypes: Array,
-    variations: Object,
+    variants: {
+      dimensions: Array,
+      allVariants: Array,
+    },
     quantity: Number,
   },
   overview: {

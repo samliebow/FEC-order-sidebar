@@ -7,9 +7,30 @@ describe('orderSidebar', () => {
       title: 'Widget',
       sellerName: 'fooBar Unlimited',
       contactName: 'Fred',
-      variationTypes: ['Size'],
-      variations: { Size: [['S', 10], ['M', 7], ['L', 11]] },
-      quantity: 3,
+      variants: {
+        dimensions: [
+          {
+            name: 'Color',
+            options: ['Black', 'Green', 'White'],
+          },
+          {
+            name: 'Size',
+            options: ['S', 'M', 'L'],
+          },
+        ],
+
+        allVariants: [
+          ['Black', 'S', 7.5],
+          ['Black', 'M', 7.6],
+          ['Black', 'L', 7.7],
+          ['Green', 'S', 4.5],
+          ['Green', 'M', 4.6],
+          ['Green', 'L', 4.7],
+          ['White', 'S', 9.5],
+          ['White', 'M', 9.6],
+          ['White', 'L', 9.7],
+        ],
+      },
     },
     overview: {
       materials: ['flesh', 'blood'],
