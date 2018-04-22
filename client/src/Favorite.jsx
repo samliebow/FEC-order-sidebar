@@ -80,7 +80,7 @@ class Favorite extends React.Component {
 
   render() {
     return (
-      <div className="main-item" id="favorite-component">
+      <div styleName="mainItem" id="favorite-component">
         {this.renderFavorite()}
         {' '}
         {this.renderAdded()}

@@ -143,7 +143,7 @@ class OrderForm extends React.Component {
 
   render() {
     return (
-      <div id="order-form">
+      <div styleName="mainItem">
         <h1 styleName="title">{this.props.data.title}</h1>
 
         <div styleName="pAndQ">

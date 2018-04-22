@@ -1,4 +1,12 @@
+.mainItem {
+  border-top-style: ridge;
+  border-bottom-style: ridge;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
 .box {
+
   padding: 3px 7px 3px 7px;
   border-style: solid;
   border-radius: 3px;

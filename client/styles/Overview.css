@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins');
 
+.mainItem {
+  border-top-style: ridge;
+  padding-bottom: 20px;
+}
+
 .overviewList {
   font-family: "Poppins", sans-serif;
   white-space: pre;

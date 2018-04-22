@@ -84,7 +84,7 @@ class Shipping extends React.Component {
 
   render() {
     return (
-      <div className="main-item" id="shipping">
+      <div styleName="mainItem" id="shipping">
         <h2 styleName="shippingTitle">Shipping & returns</h2>
 
         <div styleName="shippingHeader">Ready to ship in {this.props.data.timeToShip}</div>

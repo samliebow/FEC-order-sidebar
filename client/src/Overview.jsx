@@ -33,7 +33,7 @@ const Overview = (props) => {
   };
 
   return (
-    <div className="main-item" id="overview">
+    <div styleName="mainItem" id="overview">
       <h2 styleName="overviewTitle">Overview</h2>
       <ul>
         {renderItemType()}
