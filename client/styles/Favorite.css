@@ -1,0 +1,27 @@
+.box {
+  padding: 3px 7px 3px 7px;
+  border-style: solid;
+  border-radius: 3px;
+  border-color: #777;
+  border-width: 1px;
+  margin-right: 5px;
+  font-size: 13px;
+}
+
+.box:hover {
+  background-color: #eee;
+}
+
+.grayHeart {
+  color: #ccc;
+}
+
+.redHeart {
+  color: red;
+}
+
+.checkedList {
+  height: 4%;
+  width: 4%;
+  object-fit: contain;
+}
