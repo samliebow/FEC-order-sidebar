@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import CSSModules from 'react-css-modules';
+import styles from '../styles/Shipping.css';
 
 class Shipping extends React.Component {
   constructor(props) {
@@ -47,23 +49,35 @@ class Shipping extends React.Component {
 
   renderDestSelect() {
     return this.state.destSelectShown ? (
-      <div id="destSelect">
-        <div>
-          <span id="countrySelectHeader">Country </span>
-          <span id="zipSelectHeader">Zip or postal code</span>
-        </div>
-        <form>
-          <select defaultValue="United States" onChange={this.handleCountryUpdate}>
-            {this.countries.map(country => <option key={country} value={country}>{country}</option>)}
+      <div styleName="destSelect">
+        <div styleName="countrySelectDiv">
+          <div styleName="selectHeader">Country </div>
+          <select
+            styleName="destInput"
+            defaultValue="United States"
+            onChange={this.handleCountryUpdate}
+          >
+            {this.countries.map(country => (
+              <option
+                styleName="shipping"
+                key={country}
+                value={country}
+              >
+                {country}
+              </option>))
+          }
           </select>
+        </div>
+        <div styleName="zipSelectDiv">
+          <div styleName="selectHeader">Zip or postal code</div>
           <input
+            styleName="destInput"
             type="text"
             placeholder={this.state.destZip}
             value={this.state.destZipInputValue}
             onKeyPress={this.handleZipUpdate}
           />
-        </form>
-
+        </div>
       </div>
     ) : null;
   }
@@ -71,28 +85,31 @@ class Shipping extends React.Component {
   render() {
     return (
       <div className="main-item" id="shipping">
-        <h4>Shipping & returns</h4>
+        <h2 styleName="shippingTitle">Shipping & returns</h2>
 
-        <b>Ready to ship in {this.props.data.timeToShip}</b> <br />
-        From {this.props.data.shipOrigin} <br />
-        <span>$7.35 shipping to </span>
-        <span
-          id="destination"
-          onClick={this.toggleDestSelect}
-          role="button"
-          tabIndex={0}
-          onKeyPress={(event) => { if (event.key === 'Enter') { this.toggleDestSelect(); } }}
-        >
-          {this.state.destCountry}, {this.state.destZip}
-        </span> <br />
+        <div styleName="shippingHeader">Ready to ship in {this.props.data.timeToShip}</div>
+        <div styleName="shippingText">From {this.props.data.shipOrigin} </div>
+        <div styleName="shippingText">
+          <span >$7.35 shipping to </span>
+          <span
+            styleName="shippingDest"
+            id="destination"
+            onClick={this.toggleDestSelect}
+            role="button"
+            tabIndex={0}
+            onKeyPress={(event) => { if (event.key === 'Enter') { this.toggleDestSelect(); } }}
+          >
+            {this.state.destCountry}, {this.state.destZip}
+          </span>
+        </div>
 
         {this.renderDestSelect()}
 
-        <span id="upgrades-available">Shipping upgrades available in the cart</span> <br />
+        <div styleName="shippingUpdates">Shipping upgrades available in the cart</div>
         <br />
-
-        <b>Returns and exchanges accepted</b> <br />
-        Exceptions may apply. <a href="#">See return policy</a> <br />
+        <div styleName="shippingHeader">Returns and exchanges accepted</div>
+        <div styleName="shippingText">Exceptions may apply. <a styleName="shippingText" href="#">See return policy</a></div>
+        <br />
       </div>
     );
   }
@@ -108,4 +125,4 @@ Shipping.propTypes = {
   }).isRequired,
 };
 
-export default Shipping;
+export default CSSModules(Shipping, styles);
