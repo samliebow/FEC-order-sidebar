@@ -68,7 +68,7 @@ class Favorite extends React.Component {
       >
         {this.state.added ?
           <span>
-            <img styleName="checkedList" src="checkedList.png" alt="" /> Added
+            <img styleName="checkedList" src="orderSidebar/checkedList.png" alt="" /> Added
           </span> :
           <span>
             <FontAwesomeIcon icon={bars} /> Add to
