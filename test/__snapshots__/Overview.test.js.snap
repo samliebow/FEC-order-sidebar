@@ -2,62 +2,81 @@
 
 exports[`Overview should display "handmade" text if item is handmade 1`] = `
 <div
-  className="main-item"
+  className="mainItem"
   id="overview"
 >
-  <h4>
+  <h2
+    className="overviewTitle"
+    key=".0"
+  >
     Overview
-  </h4>
-  <ul>
+  </h2>
+  <ul
+    key=".1"
+  >
     <li
-      className="overview-list"
+      className="overviewList"
+      key=".0"
     >
       Handmade supply
     </li>
     <li
-      className="overview-list"
+      className="overviewList"
+      key=".1"
     >
       Materials: 
       flesh, blood
     </li>
     <li
-      className="overview-list"
+      className="overviewList"
+      key=".2"
     >
       Vintage item from the 
       '
       90s
     </li>
     <li
-      className="overview-list"
+      className="overviewList"
+      key=".3"
     >
       Feedback:
+       
       <a
+        className="feedbackLink"
         href="#"
+        key=".2"
       >
         100
          reviews
       </a>
     </li>
     <li
-      className="overview-list"
+      className="overviewList"
+      key=".4"
     >
       Favorited by:
+       
       <a
+        className="feedbackLink"
         href="#"
+        key=".2"
       >
         200
          people
       </a>
     </li>
   </ul>
-  <div>
+  <div
+    key=".2"
+  >
+    <img
+      className="giftIcon"
+      key=".0"
+      src="giftIcon.png"
+    />
     <span
-      id="gift-card-icon"
-    >
-      ((Img))
-    </span>
-    <span
-      id="gift-cart-msg"
+      className="overviewList"
+      key=".1"
     >
       This shop accepts Etsy gift cards
     </span>
@@ -67,57 +86,75 @@ exports[`Overview should display "handmade" text if item is handmade 1`] = `
 
 exports[`Overview should not display "handmade" text if item is not handmade 1`] = `
 <div
-  className="main-item"
+  className="mainItem"
   id="overview"
 >
-  <h4>
+  <h2
+    className="overviewTitle"
+    key=".0"
+  >
     Overview
-  </h4>
-  <ul>
+  </h2>
+  <ul
+    key=".1"
+  >
     <li
-      className="overview-list"
+      className="overviewList"
+      key=".1"
     >
       Materials: 
       flesh, blood
     </li>
     <li
-      className="overview-list"
+      className="overviewList"
+      key=".2"
     >
       Vintage item from the 
       '
       90s
     </li>
     <li
-      className="overview-list"
+      className="overviewList"
+      key=".3"
     >
       Feedback:
+       
       <a
+        className="feedbackLink"
         href="#"
+        key=".2"
       >
         100
          reviews
       </a>
     </li>
     <li
-      className="overview-list"
+      className="overviewList"
+      key=".4"
     >
       Favorited by:
+       
       <a
+        className="feedbackLink"
         href="#"
+        key=".2"
       >
         200
          people
       </a>
     </li>
   </ul>
-  <div>
+  <div
+    key=".2"
+  >
+    <img
+      className="giftIcon"
+      key=".0"
+      src="giftIcon.png"
+    />
     <span
-      id="gift-card-icon"
-    >
-      ((Img))
-    </span>
-    <span
-      id="gift-cart-msg"
+      className="overviewList"
+      key=".1"
     >
       This shop accepts Etsy gift cards
     </span>

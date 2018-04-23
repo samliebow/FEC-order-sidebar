@@ -33,12 +33,12 @@ describe('Overview', () => {
 
   it('should render the list of materials', () => {
     const wrapper = shallow(<Overview data={testData} />);
-    expect(wrapper.find('.overview-list').at(1).text()).toBe('Materials: flesh, blood');
+    expect(wrapper.find('.overviewList').at(1).text()).toBe('Materials: flesh, blood');
   });
 
   it('should render the vintage', () => {
     const wrapper = shallow(<Overview data={testData} />);
-    expect(wrapper.find('.overview-list').at(2).text()).toBe('Vintage item from the \'90s');
+    expect(wrapper.find('.overviewList').at(2).text()).toBe('Vintage item from the \'90s');
   });
 });
 
