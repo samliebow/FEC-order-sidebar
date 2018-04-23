@@ -9,6 +9,7 @@ app.use(bodyParser.json());
 
 // matches listings/<any nine digits>/<any-letter-and-dash-sequence>/<not ending with 'data'>
 // currently needs the / after listing-name, couldn't fix the regex to allow that
+app.use(/listings\/[0-9]{9}\/[A-z-]+\/orderSidebar\//, express.static(path.join(__dirname, '../public')));
 app.use(/listings\/[0-9]{9}\/[A-z-]+\/(?!data)/, express.static(path.join(__dirname, '../public')));
 
 app.get(
