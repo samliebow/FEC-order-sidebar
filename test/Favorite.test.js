@@ -7,24 +7,24 @@ describe('Favorite', () => {
   it('flips the favorite button status on toggleFavorite', () => {
     const favorite = wrapper.instance();
     let favoriteButton = render(favorite.renderFavorite());
-    expect(favoriteButton.text()).toBe('[gHrt] Favorite');
+    expect(favoriteButton.text()).toBe(' Favorite');
     favorite.toggleFavorite();
     favoriteButton = render(favorite.renderFavorite());
-    expect(favoriteButton.text()).toBe('[rHrt] Favorited');
+    expect(favoriteButton.text()).toBe(' Favorited');
     favorite.toggleFavorite();
     favoriteButton = render(favorite.renderFavorite());
-    expect(favoriteButton.text()).toBe('[gHrt] Favorite');
+    expect(favoriteButton.text()).toBe(' Favorite');
   });
 
   it('flips added status on addToList (temporary)', () => {
     const favorite = wrapper.instance();
     let addButton = render(favorite.renderAdded());
-    expect(addButton.text()).toBe('[noChk] Add to');
+    expect(addButton.text()).toBe(' Add to');
     favorite.addToList();
     addButton = render(favorite.renderAdded());
-    expect(addButton.text()).toBe('[chk] Added');
+    expect(addButton.text()).toBe(' Added');
     favorite.addToList();
     addButton = render(favorite.renderAdded());
-    expect(addButton.text()).toBe('[noChk] Add to');
+    expect(addButton.text()).toBe(' Add to');
   });
 });

@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import CSSModules from 'react-css-modules';
+import styles from '../styles/OrderForm.css';
 
 class OrderForm extends React.Component {
   constructor(props) {
@@ -122,7 +124,7 @@ class OrderForm extends React.Component {
       price = `${Math.min(...prices).toFixed(2)}-${Math.max(...prices).toFixed(2)}`;
     }
     return (
-      <option className="variant-option" key={optionName} value={optionName}>
+      <option styleName="variantOption" key={optionName} value={optionName}>
         {`${optionName} ($${price})`}
       </option>
     );
@@ -141,24 +143,27 @@ class OrderForm extends React.Component {
 
   render() {
     return (
-      <div className="main-item" id="order-form">
-        <h4 id="title">{this.props.data.title}</h4>
+      <div styleName="mainItem">
+        <h1 styleName="title">{this.props.data.title}</h1>
 
-        <div id="price-and-question">
-          <span id="price">${this.state.totalPrice}</span>
-          <span id="q-span"><button id="q-button">Ask a question</button></span>
+        <div styleName="pAndQ">
+          <span styleName="price">${this.state.totalPrice}</span>
+          <span styleName="qSpan"><a styleName="qButton">Ask a question</a></span>
         </div>
 
         <div id="variants">
           {this.props.data.variants.dimensions.map((dimension, dimensionNum) => (
             <div key={dimension.name} className="variant-dimension">
-              <div className="variant-dimension-name">{dimension.name}</div>
+              <div styleName="variantDimensionName">{dimension.name}</div>
               <select
-                value={dimensionNum ? this.state.dimensionOneVariant : this.state.dimensionZeroVariant}
+                value={dimensionNum ?
+                  this.state.dimensionOneVariant :
+                  this.state.dimensionZeroVariant}
                 onChange={event => this.handleOptionSelect(event, dimensionNum)}
+                styleName="variantSelect"
               >
-                <option className="variant-option" key={`noChoice${dimensionNum}`} value="">
-                  Please select an option...
+                <option styleName="variantOption" key={`noChoice${dimensionNum}`} value="">
+                  Select a {dimension.name.toLowerCase()}
                 </option>
                 {dimension.options.map(optionName => this.renderOption(optionName, dimensionNum))}
               </select>
@@ -168,20 +173,20 @@ class OrderForm extends React.Component {
         </div>
 
         <div id="quantity">
-          <div>Quantity</div>
-          <select onChange={this.handleQuantitySelect}>
+          <div styleName="variantDimensionName">Quantity</div>
+          <select onChange={this.handleQuantitySelect} styleName="quantitySelect">
             {this.makeQuantityOptions(this.state.variantQuantity)}
           </select>
         </div>
 
         <div id="buy-now">
-          <button onClick={this.handleBuyNowClick}>
+          <button styleName="buyNow" onClick={this.handleBuyNowClick}>
           Buy it now {'>'} {/* Render the character > without offending JSX */}
           </button>
         </div>
 
         <div id="add-cart">
-          <button>
+          <button styleName="addToCart">
           Add to cart
           </button>
         </div>
@@ -205,7 +210,7 @@ OrderForm.propTypes = {
   }).isRequired,
 };
 
-export default OrderForm;
+export default CSSModules(OrderForm, styles);
 
 
 /* Not implementing now, but leaving as notes for a stretch goal:

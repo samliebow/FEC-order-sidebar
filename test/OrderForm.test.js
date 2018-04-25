@@ -44,11 +44,11 @@ describe('orderForm', () => {
   });
 
   it('creates the correct number of variant options', () => {
-    expect(wrapper.find('.variant-option').length).toBe(8);
+    expect(wrapper.find('.variantOption').length).toBe(8);
   });
 
   it('creates variants with appropriate text and values', () => {
-    expect(wrapper.find('.variant-option').last().html()).toBe('<option class="variant-option" value="L">L ($4.70-9.70)</option>');
+    expect(wrapper.find('.variantOption').last().html()).toBe('<option value="L" class="variantOption">L ($4.70-9.70)</option>');
   });
 
   it('sets the initial single and total prices to the lowest variant price', () => {
