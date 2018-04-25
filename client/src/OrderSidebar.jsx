@@ -17,7 +17,7 @@ class OrderSidebar extends React.Component {
   }
 
   componentDidMount() {
-    fetch(`http://127.0.0.1:1541${window.location.pathname}data`)
+    fetch(`${window.location.href}orderSidebar/data`)
       .then(response => response.json())
       .then(data => this.setState({ data }))
       .catch((error) => {
@@ -119,4 +119,5 @@ OrderSidebar.propTypes = {
   }),
 };
 
+window.OrderSidebar = CSSModules(OrderSidebar, styles);
 export default CSSModules(OrderSidebar, styles);
