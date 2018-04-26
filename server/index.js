@@ -9,8 +9,8 @@ const app = express();
 app.use(bodyParser.json());
 app.use(morgan('dev'));
 
-// matches listings/<any nine digits>/<any-letter-and-dash-sequence>/<not ending with 'data'>
-app.use(/listings\/[0-9]{9}\/[A-z-]+\/orderSidebar\/(?!.*data)/, express.static(path.join(__dirname, '../public')));
+// matches listings/<any nine digits>/<any-letter-and-dash-sequence>/possibly with orderSidebar/<not ending with 'data'>
+app.use(/listings\/[0-9]{9}\/[A-z-]+\/(orderSidebar\/?)?(?!.*data)/, express.static(path.join(__dirname, '../public')));
 // matches any sequence which includes 'orderSidebar'
 app.use('/orderSidebar', express.static(path.join(__dirname, '../public')));
 
