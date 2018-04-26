@@ -12,7 +12,8 @@
     "node": ">=6.13.0"
   },
   "scripts": {
-    "start": "nodemon server/index.js",
+    "start": "node server/index.js",
+    "seedStart": "node data/seedFakeData.js; node server/index.js",
     "build": "webpack --config webpack.config.js",
     "test": "jest",
     "test:watch": "jest --watch",
