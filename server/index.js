@@ -40,7 +40,7 @@ app.post(
     }),
 );
 
-mongoose.connect('mongodb://localhost/etsy');
+mongoose.connect('mongodb://database/etsy');
 mongoose.connection.on('error', err => console.error(`Database connection error: ${err}`));
 mongoose.connection.once('open', () => {
   console.log('Connection to database successful!');
