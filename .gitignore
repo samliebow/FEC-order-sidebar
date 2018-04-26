@@ -27,3 +27,4 @@ dist/
 public/bundle.js*
 
 data/db
+public/app.js*

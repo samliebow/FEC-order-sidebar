@@ -26,7 +26,7 @@ const Overview = (props) => {
   const renderGiftCardOption = function renderGiftCardOption() {
     return props.data.acceptGiftCards ?
       <div>
-        <img styleName="giftIcon" src="giftIcon.png" />
+        <img styleName="giftIcon" src="orderSidebar/giftIcon.png" />
         <span styleName="overviewList">This shop accepts Etsy gift cards</span>
       </div> :
       undefined;

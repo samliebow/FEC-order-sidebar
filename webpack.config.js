@@ -1,10 +1,13 @@
 const path = require('path');
 
 module.exports = {
-  entry: path.resolve(__dirname, 'client', 'src', 'render.jsx'),
+  entry: {
+    bundle: path.join(__dirname, 'client', 'src', 'render.jsx'),
+    app: path.join(__dirname, 'client', 'src', 'OrderSidebar.jsx'),
+  },
   output: {
     path: path.resolve(__dirname, 'public'),
-    filename: 'bundle.js',
+    filename: '[name].js',
   },
   watch: true,
   devtool: 'source-map',
