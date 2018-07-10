@@ -6,9 +6,7 @@ import styles from '../styles/OrderForm.css';
 class OrderForm extends React.Component {
   constructor(props) {
     super(props);
-    const lowestPrice = this.getLowestPrice();
-    const lowestPriceQuantity = this.getLowestPriceQuantity();
-
+    const [, , lowestPrice, lowestPriceQuantity] = this.getLowestPricedItem();
     this.state = {
       singlePrice: lowestPrice,
       // toFixed solves floating point issue; it returns a string, but that's not a problem here.
@@ -27,16 +25,9 @@ class OrderForm extends React.Component {
     this.handleBuyNowClick = this.handleBuyNowClick.bind(this);
   }
 
-  getLowestPrice(variantsArray = this.props.data.variants.allVariants) {
-    // each variant is a dim-1-option, dim-2-option, price, quantity tuple
-    const prices = variantsArray.map(variant => variant[2]);
-    return Math.min(...prices);
-  }
-
-  getLowestPriceQuantity(variantsArray = this.props.data.variants.allVariants) {
-    const lowestPrice = this.getLowestPrice(variantsArray);
-    return variantsArray
-      .filter(variant => variant[2] === lowestPrice)[0][3];
+  getLowestPricedItem(variantsArray = this.props.data.variants.allVariants) {
+    // Variants are [dim1, dim2, price, quantity]
+    return variantsArray.reduce((cheapest, variant) => (cheapest[2] < variant[2] ? cheapest : variant));
   }
 
   getMatchingVariants(optionName, dimensionNum) {
@@ -67,8 +58,7 @@ class OrderForm extends React.Component {
     } else {
       matchingVariants = this.getMatchingVariants(optionName, dimensionNum);
     }
-    const singlePrice = this.getLowestPrice(matchingVariants);
-    const variantQuantity = this.getLowestPriceQuantity(matchingVariants);
+    const [, , singlePrice, variantQuantity] = this.getLowestPricedItem();
     if (dimensionNum === 0) {
       this.setState({
         dimensionZeroVariant: optionName,
