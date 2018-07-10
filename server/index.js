@@ -40,10 +40,20 @@ app.post(
     }),
 );
 
-mongoose.connect('mongodb://database/etsy');
-mongoose.connection.on('error', err => console.error(`Database connection error: ${err}`));
-mongoose.connection.once('open', () => {
-  console.log('Connection to database successful!');
-
-  app.listen(1541, () => console.log('Listening on port 1541...'));
-});
+(async function connectToDatabase() {
+  const connectSuccess = () => {
+    console.log('Connection to database successful!');
+    app.listen(1541, () => console.log('Listening on port 1541...'));
+  };
+  try {
+    await mongoose.connect('mongodb://database/etsy');
+    connectSuccess();
+  } catch (dockerizedErr) {
+    try {
+      await mongoose.connect('mongodb://localhost/etsy');
+      connectSuccess();
+    } catch (localhostErr) {
+      console.error(`Database connection error: ${localhostErr}`);
+    }
+  }
+}());
