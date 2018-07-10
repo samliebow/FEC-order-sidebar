@@ -3,6 +3,7 @@ import CSSModules from 'react-css-modules';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import heart from '@fortawesome/fontawesome-free-solid/faHeart';
 import bars from '@fortawesome/fontawesome-free-solid/faBars';
+import check from '@fortawesome/fontawesome-free-solid/faCheck';
 import styles from '../styles/Favorite.css';
 
 class Favorite extends React.Component {
@@ -11,7 +12,6 @@ class Favorite extends React.Component {
     this.state = {
       favorited: false,
       added: false,
-      userLists: [], // To be used later on
     };
     this.toggleFavorite = this.toggleFavorite.bind(this);
     this.addToList = this.addToList.bind(this);
@@ -68,11 +68,7 @@ class Favorite extends React.Component {
       >
         {this.state.added ?
           <span>
-            <img
-              styleName="checkedList"
-              src="https://s3-us-west-2.amazonaws.com/order-sidebar/checkedList.png"
-              alt=""
-            /> Added
+            <FontAwesomeIcon icon={check} /> Added
           </span> :
           <span>
             <FontAwesomeIcon icon={bars} /> Add to
