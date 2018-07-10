@@ -6,6 +6,7 @@ import styles from '../styles/OrderForm.css';
 class OrderForm extends React.Component {
   constructor(props) {
     super(props);
+    this.allVariants = this.props.data.variants.allVariants;
     const [, , lowestPrice, lowestPriceQuantity] = this.getLowestPricedItem();
     this.state = {
       singlePrice: lowestPrice,
@@ -25,13 +26,13 @@ class OrderForm extends React.Component {
     this.handleBuyNowClick = this.handleBuyNowClick.bind(this);
   }
 
-  getLowestPricedItem(variantsArray = this.props.data.variants.allVariants) {
+  getLowestPricedItem(variantsArray = this.allVariants) {
     // Variants are [dim1, dim2, price, quantity]
     return variantsArray.reduce((cheapest, variant) => (cheapest[2] < variant[2] ? cheapest : variant));
   }
 
   getMatchingVariants(optionName, dimensionNum) {
-    const optionMatches = this.props.data.variants.allVariants
+    const optionMatches = this.allVariants
       .filter(variant => variant[dimensionNum] === optionName);
 
     const otherVariantName = dimensionNum === 0 ?
@@ -52,7 +53,7 @@ class OrderForm extends React.Component {
       this.state.dimensionOneVariant : this.state.dimensionZeroVariant;
     const otherVariantSet = !!otherVariantName;
     if (!optionName && !otherVariantSet) {
-      matchingVariants = this.props.data.variants.allVariants;
+      matchingVariants = this.allVariants;
     } else if (!optionName) {
       matchingVariants = this.getMatchingVariants(otherVariantName, +!dimensionNum);
     } else {
@@ -125,7 +126,7 @@ class OrderForm extends React.Component {
       this.state.pleaseSelectShownZero :
       this.state.pleaseSelectShownOne;
     return test ?
-      <div className="please-select">
+      <div styleName="pleaseSelect">
         Please select a {dimension.toLowerCase()}
       </div> :
       null;
