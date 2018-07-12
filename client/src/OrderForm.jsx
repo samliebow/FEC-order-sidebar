@@ -32,33 +32,21 @@ class OrderForm extends React.Component {
   }
 
   getMatchingVariants(optionName, dimensionNum) {
-    const optionMatches = this.allVariants
-      .filter(variant => variant[dimensionNum] === optionName);
+    const optionMatches = optionName ? this.allVariants
+      .filter(variant => variant[dimensionNum] === optionName) :
+      this.allVariants;
 
-    const otherVariantName = dimensionNum === 0 ?
+    const otherOption = dimensionNum === 0 ?
       this.state.dimensionOneVariant : this.state.dimensionZeroVariant;
-    const otherVariantSet = !!otherVariantName; // true if not empty
 
-    if (otherVariantSet) {
-      return optionMatches
-        .filter(variant => variant[+!dimensionNum] === otherVariantName); // +! is 0 if 1, 1 if 0
-    }
-    return optionMatches;
+    return otherOption ? optionMatches
+      .filter(variant => variant[+!dimensionNum] === otherOption) : // +! is 0 if 1, 1 if 0
+      optionMatches;
   }
 
   handleOptionSelect(event, dimensionNum) {
     const optionName = event.target.value;
-    let matchingVariants;
-    const otherVariantName = dimensionNum === 0 ?
-      this.state.dimensionOneVariant : this.state.dimensionZeroVariant;
-    const otherVariantSet = !!otherVariantName;
-    if (!optionName && !otherVariantSet) {
-      matchingVariants = this.allVariants;
-    } else if (!optionName) {
-      matchingVariants = this.getMatchingVariants(otherVariantName, +!dimensionNum);
-    } else {
-      matchingVariants = this.getMatchingVariants(optionName, dimensionNum);
-    }
+    const matchingVariants = this.getMatchingVariants(optionName, dimensionNum);
     const [, , singlePrice, variantQuantity] = this.getLowestPricedItem(matchingVariants);
     if (dimensionNum === 0) {
       this.setState({
@@ -202,24 +190,3 @@ OrderForm.propTypes = {
 };
 
 export default CSSModules(OrderForm, styles);
-
-
-/* Not implementing now, but leaving as notes for a stretch goal:
-
-renderSpecialMessage() {
-  const specialMessage = 'others want'; // Hard-coding for now
-  if (specialMessage === 'others want') {
-    return (
-      <div>
-        <span>((Image will go here, real thing is vector graphics in <g> tag)) </span>
-        <span>
-          <b>Other people want this. </b>
-          {this.props.data.numInCarts} people have this in their carts right now.
-        </span>
-      </div>
-    );
-  }
-  return null;
-}
-
-*/
