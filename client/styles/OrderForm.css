@@ -72,12 +72,14 @@
 }
 
 .variantSelect {
-  font-size: 12px;
+  font-size: 11px;
   padding: 3px;
+  width: 200px;
 }
 
 .quantitySelect {
   composes: variantSelect;
+  width: 35px;
   box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
 
