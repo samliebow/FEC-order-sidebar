@@ -8,7 +8,6 @@ class Shipping extends React.Component {
     super(props);
     this.state = {
       destCountry: 'United States',
-      destCountryOptionValue: '',
       destZip: 94102,
       destZipInputValue: '',
       destSelectShown: false,
@@ -26,9 +25,10 @@ class Shipping extends React.Component {
   }
 
   handleCountryUpdate(event) {
-    this.setState({
-      destCountryOptionValue: event.target.value,
-    });
+    const destCountry = event.target.value;
+    const update = { destCountry };
+    update.destSelectShown = destCountry === 'United States';
+    this.setState(update);
   }
 
   handleZipUpdate(event) {
@@ -40,9 +40,7 @@ class Shipping extends React.Component {
     } else if (event.key === 'Enter') {
       this.setState({
         destZip: this.state.destZipInputValue || this.state.destZip,
-        destCountry: this.state.destCountryOptionValue || this.state.destCountry,
         destZipInputValue: '',
-        destCountryOptionValue: '',
       });
     }
   }
@@ -54,7 +52,7 @@ class Shipping extends React.Component {
           <div styleName="selectHeader">Country </div>
           <select
             styleName="destInput"
-            defaultValue="United States"
+            defaultValue={this.state.destCountry}
             onChange={this.handleCountryUpdate}
           >
             {this.countries.map(country => (
@@ -68,16 +66,17 @@ class Shipping extends React.Component {
           }
           </select>
         </div>
-        <div styleName="zipSelectDiv">
-          <div styleName="selectHeader">Zip or postal code</div>
-          <input
-            styleName="destInput"
-            type="text"
-            placeholder={this.state.destZip}
-            value={this.state.destZipInputValue}
-            onKeyPress={this.handleZipUpdate}
-          />
-        </div>
+        {this.state.destCountry === 'United States' ? (
+          <div styleName="zipSelectDiv">
+            <div styleName="selectHeader">Zip or postal code</div>
+            <input
+              styleName="destInput"
+              type="text"
+              placeholder={this.state.destZip}
+              value={this.state.destZipInputValue}
+              onKeyPress={this.handleZipUpdate}
+            />
+          </div>) : null}
       </div>
     ) : null;
   }
@@ -99,13 +98,13 @@ class Shipping extends React.Component {
             tabIndex={0}
             onKeyPress={(event) => { if (event.key === 'Enter') { this.toggleDestSelect(); } }}
           >
-            {this.state.destCountry}, {this.state.destZip}
+            {this.state.destCountry}{this.state.destCountry === 'United States' ? `, ${this.state.destZip}` : ''}
           </span>
         </div>
 
         {this.renderDestSelect()}
 
-        <div styleName="shippingUpdates">Shipping upgrades available in the cart</div>
+        <div styleName="shippingUpgrades">Shipping upgrades available in the cart</div>
         <br />
         <div styleName="shippingHeader">Returns and exchanges accepted</div>
         <div styleName="shippingText">Exceptions may apply. <a styleName="shippingText" href="#">See return policy</a></div>
