@@ -59,7 +59,7 @@ class OrderForm extends React.Component {
     } else {
       matchingVariants = this.getMatchingVariants(optionName, dimensionNum);
     }
-    const [, , singlePrice, variantQuantity] = this.getLowestPricedItem();
+    const [, , singlePrice, variantQuantity] = this.getLowestPricedItem(matchingVariants);
     if (dimensionNum === 0) {
       this.setState({
         dimensionZeroVariant: optionName,
