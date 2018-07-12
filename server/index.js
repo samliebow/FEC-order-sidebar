@@ -9,8 +9,10 @@ const app = express();
 app.use(bodyParser.json());
 app.use(morgan('dev'));
 
-// matches listings/<any nine digits>/<any-letter-and-dash-sequence>/possibly with orderSidebar/<not ending with 'data'>
-app.use(/listings\/[0-9]{9}\/[A-z-]+\/(orderSidebar\/?)?(?!.*data)/, express.static(path.join(__dirname, '../public')));
+// matches either just the host name (for a nice landing page)
+// or any valid page:
+// listings/<nine digits>/<letter-dash-sequence>/<possibly 'orderSidebar'>/<not ending with 'data'>
+app.use(['/', /listings\/[0-9]{9}\/[A-z-]+\/(orderSidebar\/?)?(?!.*data)/], express.static(path.join(__dirname, '../public')));
 // matches any sequence which includes 'orderSidebar'
 app.use('/orderSidebar', express.static(path.join(__dirname, '../public')));
 
@@ -50,7 +52,7 @@ app.post(
     connectSuccess();
   } catch (dockerizedErr) {
     try {
-      await mongoose.connect('mongodb://localhost/etsy');
+      await mongoose.connect('mongodb://127.0.0.1/etsy');
       connectSuccess();
     } catch (localhostErr) {
       console.error(`Database connection error: ${localhostErr}`);

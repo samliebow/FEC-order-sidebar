@@ -46,25 +46,25 @@ OrderSidebar.defaultProps = {
       variants: {
         dimensions: [
           {
-            name: 'Color',
-            options: ['Red', 'Blue', 'Yellow'],
+            name: 'Frame',
+            options: ['Metal', 'Plastic', 'Wood'],
           },
           {
             name: 'Size',
-            options: ['Small', 'Medium', 'Big'],
+            options: ['6x4 inches', '5x7 inches', '8x10 inches'],
           },
         ],
 
         allVariants: [
-          ['Red', 'Small', 7.5, 5],
-          ['Red', 'Medium', 7.6, 2],
-          ['Red', 'Big', 7.7, 3],
-          ['Blue', 'Small', 4.5, 6],
-          ['Blue', 'Medium', 4.6, 1],
-          ['Blue', 'Big', 4.7, 9],
-          ['Yellow', 'Small', 9.5, 10],
-          ['Yellow', 'Medium', 9.6, 12],
-          ['Yellow', 'Big', 9.7, 13],
+          ['Metal', '6x4 inches', 15, 5],
+          ['Metal', '5x7 inches', 16.5, 2],
+          ['Metal', '8x10 inches', 18, 3],
+          ['Plastic', '6x4 inches', 10, 6],
+          ['Plastic', '5x7 inches', 11, 1],
+          ['Plastic', '8x10 inches', 12, 9],
+          ['Wood', '6x4 inches', 17, 10],
+          ['Wood', '5x7 inches', 19, 12],
+          ['Wood', '8x10 inches', 20, 13],
         ],
       },
     },
