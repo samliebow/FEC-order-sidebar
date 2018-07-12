@@ -12,6 +12,7 @@ class Favorite extends React.Component {
     this.state = {
       favorited: false,
       added: false,
+      userLists: [], // To be used later on
     };
     this.toggleFavorite = this.toggleFavorite.bind(this);
     this.addToList = this.addToList.bind(this);
@@ -71,7 +72,7 @@ class Favorite extends React.Component {
             <FontAwesomeIcon icon={check} /> Added
           </span> :
           <span>
-            <FontAwesomeIcon icon={bars} /> Add to
+            <FontAwesomeIcon icon={bars} /> Add to list
           </span>
         }
       </span>
