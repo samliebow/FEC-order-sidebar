@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import giftIcon from '@fortawesome/fontawesome-free-solid/faGift';
 import styles from '../styles/Overview.css';
 
 const Overview = (props) => {
@@ -26,12 +28,8 @@ const Overview = (props) => {
   const renderGiftCardOption = function renderGiftCardOption() {
     return props.data.acceptGiftCards ?
       <div>
-        <img
-          styleName="giftIcon"
-          src="https://s3.console.aws.amazon.com/s3/buckets/order-sidebar/?region=us-east-1&tab=overview"
-          alt=""
-        />
-        <span styleName="overviewList">This shop accepts Etsy gift cards</span>
+        <FontAwesomeIcon icon={giftIcon} /> {' '}
+        <span styleName="overviewList">This shop accepts Mini Market gift cards</span>
       </div> :
       undefined;
   };
