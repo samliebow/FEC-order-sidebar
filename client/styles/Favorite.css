@@ -27,9 +27,3 @@
 .redHeart {
   color: red;
 }
-
-.checkedList {
-  height: 4%;
-  width: 4%;
-  object-fit: contain;
-}
