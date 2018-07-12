@@ -46,7 +46,7 @@ OrderSidebar.defaultProps = {
       variants: {
         dimensions: [
           {
-            name: 'Frame',
+            name: 'Frame material',
             options: ['Metal', 'Plastic', 'Wood'],
           },
           {
