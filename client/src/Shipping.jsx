@@ -41,6 +41,7 @@ class Shipping extends React.Component {
       this.setState({
         destZip: this.state.destZipInputValue || this.state.destZip,
         destZipInputValue: '',
+        destSelectShown: false,
       });
     }
   }
