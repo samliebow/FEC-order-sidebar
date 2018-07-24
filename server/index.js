@@ -12,7 +12,8 @@ app.use(morgan('dev'));
 // matches either just the host name (for a nice landing page)
 // or any valid page:
 // listings/<nine digits>/<letter-dash-sequence>/<possibly 'orderSidebar'>/<not ending with 'data'>
-app.use(['/', /listings\/[0-9]{9}\/[A-z-]+\/(orderSidebar\/?)?(?!.*data)/], express.static(path.join(__dirname, '../public')));
+// Order matters in the paths array here
+app.use([/\/listings\/[0-9]{9}\/[A-z-]+(orderSidebar\/?)?(?!.*data)/, '/'], express.static(path.join(__dirname, '../public')));
 // matches any sequence which includes 'orderSidebar'
 app.use('/orderSidebar', express.static(path.join(__dirname, '../public')));
 
