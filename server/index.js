@@ -49,11 +49,11 @@ app.post(
     app.listen(1541, () => console.log('Listening on port 1541...'));
   };
   try {
-    await mongoose.connect('mongodb://database/etsy');
+    await mongoose.connect('mongodb://database/mini-market');
     connectSuccess();
   } catch (dockerizedErr) {
     try {
-      await mongoose.connect('mongodb://127.0.0.1/etsy');
+      await mongoose.connect('mongodb://127.0.0.1/mini-market');
       connectSuccess();
     } catch (localhostErr) {
       console.error(`Database connection error: ${localhostErr}`);
