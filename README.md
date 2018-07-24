@@ -1,39 +1,23 @@
-# Project Name
+# Mini Market
 
-> Project description
+An online marketplace listings page microservice. 
+See live demo [here](http://ec2-54-241-187-193.us-west-1.compute.amazonaws.com/)!
 
-## Related Projects
+Features:
+- Dynamic price-range display which updates as user selects options
+- Price and quantity displayed is always for lowest-priced matching item
+- Prompts user for any missing information without form submission
+- Automatically shown and hidden shipping destination select form
 
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
-  - https://github.com/teamName/repo
-
-## Table of Contents
-
-1. [Usage](#Usage)
-1. [Requirements](#requirements)
-1. [Development](#development)
+![Mini Market](https://github.com/samliebow/mini-market/raw/master/demo.gif)
 
 ## Usage
 
-> Some usage instructions
+From within the repo directory, `npm install` and `npm scratchStart` the first time. This will seed the database with 100 records, which can be accessed from any of the URLs [here](https://github.com/samliebow/mini-market/raw/master/data/urls.txt).
+After the first time, just run `npm start`!
 
 ## Requirements
 
-An `nvmrc` file is included if using [nvm](https://github.com/creationix/nvm).
+If you want to install and run this locally, you must have a MongoDB instance running.
 
-- Node 6.13.0
-- etc
-
-## Development
-
-### Installing Dependencies
-
-From within the root directory:
-
-```sh
-npm install -g webpack
-npm install
-```
-
+Node version: 8.11.3. An `nvmrc` file is included if using [nvm](https://github.com/creationix/nvm).
