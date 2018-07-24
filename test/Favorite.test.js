@@ -19,12 +19,12 @@ describe('Favorite', () => {
   it('flips added status on addToList (temporary)', () => {
     const favorite = wrapper.instance();
     let addButton = render(favorite.renderAdded());
-    expect(addButton.text()).toBe(' Add to');
+    expect(addButton.text()).toBe(' Add to list');
     favorite.addToList();
     addButton = render(favorite.renderAdded());
     expect(addButton.text()).toBe(' Added');
     favorite.addToList();
     addButton = render(favorite.renderAdded());
-    expect(addButton.text()).toBe(' Add to');
+    expect(addButton.text()).toBe(' Add to list');
   });
 });
