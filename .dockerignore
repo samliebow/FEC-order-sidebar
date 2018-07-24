@@ -1,3 +1,6 @@
 node_modules
 public/*
+!public/index.html
+!public/bundle.js
 coverage/
+ec2-california.pem
