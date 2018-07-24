@@ -25,4 +25,6 @@ build/
 dist/
 
 public/*
+!public/index.html
 coverage/
+ec2-california.pem
