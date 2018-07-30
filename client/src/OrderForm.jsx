@@ -26,6 +26,18 @@ class OrderForm extends React.Component {
     this.handleBuyNowClick = this.handleBuyNowClick.bind(this);
   }
 
+  componentDidUpdate() {
+    if (this.allVariants !== this.props.data.variants.allVariants) {
+      this.allVariants = this.props.data.variants.allVariants;
+      const [, , lowestPrice, lowestPriceQuantity] = this.getLowestPricedItem();
+      this.setState({
+        singlePrice: lowestPrice,
+        totalPrice: `${lowestPrice.toFixed(2)}${this.props.data.variants.dimensions.length ? '+' : ''}`,
+        variantQuantity: lowestPriceQuantity,
+      });
+    }
+  }
+
   getLowestPricedItem(variantsArray = this.allVariants) {
     // Variants are [dim1, dim2, price, quantity]
     return variantsArray.reduce((cheapest, variant) => (cheapest[2] < variant[2] ? cheapest : variant));
